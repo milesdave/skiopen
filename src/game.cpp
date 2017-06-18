@@ -2,6 +2,7 @@
 #include <ctime>
 #include "data.h"
 #include "game.h"
+#include "levels/mainlevel.h"
 
 Game::Game()
 {
@@ -113,8 +114,8 @@ void Game::setLevel(int index)
 
 void Game::setup()
 {
-	// _levels[L_MAIN] = new MainLevel(); TODO
-	// setLevel(L_MAIN);
+	_levels[L_MAIN] = new MainLevel();
+	setLevel(L_MAIN);
 }
 
 void Game::handleInput()

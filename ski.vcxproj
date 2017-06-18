@@ -23,6 +23,7 @@
     <ClCompile Include="src\data.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\gameobject.cpp" />
+    <ClCompile Include="src\levels\mainlevel.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\physics.cpp" />
     <ClCompile Include="src\renderer.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameobject.h" />
     <ClInclude Include="src\levels\level.h" />
+    <ClInclude Include="src\levels\mainlevel.h" />
     <ClInclude Include="src\physics.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\sprite.h" />
