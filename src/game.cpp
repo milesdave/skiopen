@@ -72,13 +72,13 @@ void Game::loop()
 	}
 }
 
-void Game::panic(const char *title, const char *message) const
+void Game::panic(const char* title, const char* message) const
 {
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title, message, _window);
 	exit(1);
 }
 
-void Game::windowDimentions(int *width, int *height) const
+void Game::windowDimentions(int* width, int* height) const
 {
 	if(width)
 		*width = _winWidth;

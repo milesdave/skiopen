@@ -48,7 +48,7 @@ private:
 	Physics _physics;
 
 	// behavior component
-	Behavior *_behavior = nullptr;
+	Behavior* _behavior = nullptr;
 };
 
 #endif

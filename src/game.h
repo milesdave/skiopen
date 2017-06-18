@@ -17,10 +17,10 @@ public:
 	void loop();
 
 	// Displays and error message and aborts.
-	void panic(const char *title, const char *message) const;
+	void panic(const char* title, const char* message) const;
 
 	// Fills in the arguments with the window width and height.
-	void windowDimentions(int *width, int *height) const;
+	void windowDimentions(int* width, int* height) const;
 
 	// Returns a pointer to the SDL renderer.
 	inline SDL_Renderer* renderer() const { return _renderer; }
@@ -63,13 +63,13 @@ private:
 	bool _quit = false;
 
 	// The singular Game instance.
-	static Game *_instance;
+	static Game* _instance;
 
 	// SDL window structure.
-	SDL_Window *_window = nullptr;
+	SDL_Window* _window = nullptr;
 
 	// SDL renderer structure.
-	SDL_Renderer *_renderer = nullptr;
+	SDL_Renderer* _renderer = nullptr;
 };
 
 #endif

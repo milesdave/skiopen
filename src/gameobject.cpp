@@ -1,6 +1,7 @@
 #include "behaviours/behaviour.h"
 #include "gameobject.h"
-#include "sprite.h"
+
+GameObject::GameObject() { }
 
 GameObject::~GameObject()
 {
