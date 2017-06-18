@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\behaviours\player.cpp" />
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\data.cpp" />
     <ClCompile Include="src\game.cpp" />
@@ -31,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\behaviours\behaviour.h" />
+    <ClInclude Include="src\behaviours\player.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\data.h" />
     <ClInclude Include="src\game.h" />
