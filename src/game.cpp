@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <ctime>
+#include "data.h"
 #include "game.h"
 
 Game::Game()
@@ -10,6 +11,8 @@ Game::Game()
 
 Game::~Game()
 {
+	delete Data::instance();
+
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);
 	SDL_Quit();
@@ -39,6 +42,7 @@ void Game::init()
 
 	srand((unsigned)time(nullptr));
 
+	Data::instance()->load();
 	_camera.setGeometry(Rect { 0, 0, _winWidth, _winHeight });
 
 	setup();

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\data.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\gameobject.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -30,6 +31,7 @@
   <ItemGroup>
     <ClInclude Include="src\behaviours\behaviour.h" />
     <ClInclude Include="src\camera.h" />
+    <ClInclude Include="src\data.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameobject.h" />
     <ClInclude Include="src\physics.h" />
