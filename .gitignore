@@ -1,0 +1,10 @@
+bin/
+lib/
+obj/
+.vs/
+
+*.aps
+*.db
+*.opendb
+*.swp
+*.user
