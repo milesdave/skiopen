@@ -14,6 +14,20 @@ enum Key
 	Reset = SDL_CONTROLLER_BUTTON_BACK
 };
 
+enum Joystick
+{
+	JLeft,
+	JRight
+};
+
+enum Direction
+{
+	DUp = Up,
+	DDown = Down,
+	DLeft = Left,
+	DRight = Right
+};
+
 class Input
 {
 public:
@@ -40,11 +54,14 @@ private:
 	// Returns true if the specified keyboard key is down.
 	static bool keyDown(Key key);
 
+	// Returns true if the specified stick is in the specified direction.
+	static bool joystick(Joystick stick, Direction direction);
+
 	// The connected controller.
 	static SDL_GameController* _controller;
 
 	// Joystick deadzone.
-	static constexpr Sint16 DEADZONE = 400;
+	static constexpr Sint16 DEADZONE = 14000;
 };
 
 #endif
