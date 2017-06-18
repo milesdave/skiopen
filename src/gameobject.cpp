@@ -6,14 +6,14 @@ GameObject::GameObject() { }
 
 GameObject::~GameObject()
 {
-	if(_behavior)
-		delete _behavior;
+	if(_behaviour)
+		delete _behaviour;
 }
 
 void GameObject::update()
 {
-	if(_behavior)
-		_behavior->update();
+	if(_behaviour)
+		_behaviour->update();
 
 	_physics.update();
 }
@@ -23,13 +23,13 @@ void GameObject::render()
 	_renderer.render(_physics.getPosition());
 }
 
-void GameObject::setBehavior(Behavior *behavior)
+void GameObject::setBehaviour(Behaviour *behaviour)
 {
-	if(_behavior)
-		delete _behavior;
+	if(_behaviour)
+		delete _behaviour;
 
-	_behavior = behavior;
-	_behavior->_physics = &_physics;
+	_behaviour = behaviour;
+	_behaviour->_physics = &_physics;
 }
 
 Rect GameObject::spritePosition() const

@@ -5,7 +5,7 @@
 #include "renderer.h"
 #include "types.h"
 
-class Behavior;
+class Behaviour;
 
 class GameObject
 {
@@ -27,10 +27,10 @@ public:
 	inline Physics* physics() { return &_physics; }
 
 	// Returns a pointer to the behavior component.
-	inline Behavior* getBehavior() const { return _behavior; }
+	inline Behaviour* getBehavior() const { return _behaviour; }
 
 	// Sets the behavior component.
-	void setBehavior(Behavior *behavior);
+	void setBehaviour(Behaviour* behavior);
 
 	// Gets the delete flag status.
 	inline bool getDeleteFlag() const { return _delete; }
@@ -52,7 +52,7 @@ private:
 	Physics _physics;
 
 	// behavior component
-	Behavior* _behavior = nullptr;
+	Behaviour* _behaviour = nullptr;
 };
 
 #endif

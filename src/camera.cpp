@@ -16,19 +16,19 @@ void Camera::update()
 	Vector2 pos = { sprite.x, sprite.y };
 	Vector2 rel = relative(pos);
 
-	// outside deadzone left
+	// Outside deadzone left.
 	if(rel.x < _deadzone.x)
 		_geometry.x = pos.x - _deadzone.x;
 
-	// outside deadzone right
+	// Outside deadzone right.
 	if(rel.x > _deadzone.x + _deadzone.w)
 		_geometry.x = pos.x - (_deadzone.x + _deadzone.w);
 
-	// outside deadzone top
+	// Outside deadzone top.
 	if(rel.y < _deadzone.y)
 		_geometry.y = pos.y - _deadzone.y;
 
-	// outside deadzone bottom
+	// Outside deadzone bottom.
 	if(rel.y > _deadzone.y + _deadzone.h)
 		_geometry.y = pos.y - (_deadzone.y + _deadzone.h);
 }
@@ -39,7 +39,7 @@ void Camera::setFocus(GameObject *focus)
 
 	Vector2F position = _focus->physics()->getPosition();
 
-	// centre on focus' position
+	// Centre on focus' position.
 	_geometry.x = (int)position.x - (_geometry.w / 2);
 	_geometry.y = (int)position.y - (_geometry.h / 2);
 }

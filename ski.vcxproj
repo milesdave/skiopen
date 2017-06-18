@@ -28,6 +28,7 @@
     <ClCompile Include="src\sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\behaviours\behaviour.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameobject.h" />
