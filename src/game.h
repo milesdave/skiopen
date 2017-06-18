@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include "camera.h"
 #include "gameobject.h"
+#include "levels/level.h"
 #include "structures/array.h"
 #include "structures/list.h"
 #include "types.h"
@@ -29,6 +30,9 @@ public:
 
 	// Returns a pointer to a new GameObject to use.
 	GameObject* createGameObject();
+
+	// Sets the current level.
+	void setLevel(int index);
 
 	// Returns a pointer to the SDL renderer.
 	inline SDL_Renderer* renderer() const { return _renderer; }
@@ -93,6 +97,12 @@ private:
 
 	// List of GameObjects to render.
 	List<GameObject*> _renderList;
+
+	// Array of levels.
+	Level* _levels[LEVELS];
+
+	// Pointer to the current level.
+	Level* _currentLevel = nullptr;
 };
 
 #endif

@@ -13,6 +13,9 @@ Game::~Game()
 {
 	delete Data::instance();
 
+	for(int i = 0; i < LEVELS; i++)
+		delete _levels[i];
+
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);
 	SDL_Quit();
@@ -99,9 +102,19 @@ GameObject* Game::createGameObject()
 	return x;
 }
 
+void Game::setLevel(int index)
+{
+	if(_currentLevel)
+		_currentLevel->onExit();
+
+	_currentLevel = _levels[index];
+	_currentLevel->onLoad();
+}
+
 void Game::setup()
 {
-	// TODO Add setup.
+	// _levels[L_MAIN] = new MainLevel(); TODO
+	// setLevel(L_MAIN);
 }
 
 void Game::handleInput()

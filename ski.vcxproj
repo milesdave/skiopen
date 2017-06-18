@@ -34,6 +34,7 @@
     <ClInclude Include="src\data.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameobject.h" />
+    <ClInclude Include="src\levels\level.h" />
     <ClInclude Include="src\physics.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\sprite.h" />
