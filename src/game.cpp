@@ -39,6 +39,8 @@ void Game::init()
 
 	srand((unsigned)time(nullptr));
 
+	_camera.setGeometry(Rect { 0, 0, _winWidth, _winHeight });
+
 	setup();
 }
 
@@ -84,6 +86,11 @@ void Game::windowDimentions(int* width, int* height) const
 		*width = _winWidth;
 	if(height)
 		*height = _winHeight;
+}
+
+Rect Game::centre(Rect original, Vector2 point)
+{
+	return Rect { point.x - (original.w / 2), point.y - (original.h / 2), original.w, original.h };
 }
 
 void Game::setup()

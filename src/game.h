@@ -2,6 +2,8 @@
 #define GAME_H_
 
 #include <SDL.h>
+#include "camera.h"
+#include "types.h"
 
 class Game
 {
@@ -22,11 +24,17 @@ public:
 	// Fills in the arguments with the window width and height.
 	void windowDimentions(int* width, int* height) const;
 
+	// Returns a rectangle centred on a point.
+	static Rect centre(Rect original, Vector2 point);
+
 	// Returns a pointer to the SDL renderer.
 	inline SDL_Renderer* renderer() const { return _renderer; }
 
 	// Returns the time taken to complete the last frame.
 	inline float deltaTime() const { return _deltaTime; }
+
+	// Returns a pointer to the camera object.
+	inline Camera* camera() { return &_camera; }
 
 	// Returns a pointer to this singular Game instance.
 	static inline Game* instance() { return _instance; }
@@ -70,6 +78,9 @@ private:
 
 	// SDL renderer structure.
 	SDL_Renderer* _renderer = nullptr;
+
+	// The camera object.
+	Camera _camera;
 };
 
 #endif
