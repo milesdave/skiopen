@@ -19,11 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\gameobject.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\physics.cpp" />
+    <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\gameobject.h" />
+    <ClInclude Include="src\physics.h" />
+    <ClInclude Include="src\renderer.h" />
+    <ClInclude Include="src\sprite.h" />
+    <ClInclude Include="src\types.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B404540E-E8C1-4DCC-8444-10C2B9E1D88B}</ProjectGuid>

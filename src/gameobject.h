@@ -3,6 +3,7 @@
 
 #include "physics.h"
 #include "renderer.h"
+#include "types.h"
 
 class Behavior;
 
@@ -36,6 +37,9 @@ public:
 
 	// Sets the delete flag status.
 	inline bool setDeleteFlag(bool flag) { _delete = flag; }
+
+	// Returns the GameObject sprite geometry.
+	Rect spritePosition() const;
 
 private:
 	// should the GameObject be deleted?
