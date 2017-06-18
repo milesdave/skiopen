@@ -2,6 +2,7 @@
 #include <ctime>
 #include "data.h"
 #include "game.h"
+#include "input.h"
 #include "levels/mainlevel.h"
 
 Game::Game()
@@ -13,6 +14,7 @@ Game::Game()
 Game::~Game()
 {
 	delete Data::instance();
+	Input::closeController();
 
 	for(int i = 0; i < LEVELS; i++)
 		delete _levels[i];
@@ -47,6 +49,7 @@ void Game::init()
 	srand((unsigned)time(nullptr));
 
 	Data::instance()->load();
+	Input::initController();
 	_camera.setGeometry(Rect { 0, 0, _winWidth, _winHeight });
 
 	setup();
