@@ -37,7 +37,13 @@
     <ClInclude Include="src\physics.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\sprite.h" />
+    <ClInclude Include="src\structures\array.h" />
+    <ClInclude Include="src\structures\list.h" />
     <ClInclude Include="src\types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\structures\array.tcc" />
+    <None Include="src\structures\list.tcc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B404540E-E8C1-4DCC-8444-10C2B9E1D88B}</ProjectGuid>
