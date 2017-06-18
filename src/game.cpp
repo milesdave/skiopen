@@ -92,9 +92,11 @@ void Game::windowDimentions(int* width, int* height) const
 		*height = _winHeight;
 }
 
-Rect Game::centre(Rect original, Vector2 point)
+GameObject* Game::createGameObject()
 {
-	return Rect { point.x - (original.w / 2), point.y - (original.h / 2), original.w, original.h };
+	GameObject *x = _gameObjects.allocate();
+	*x = GameObject();
+	return x;
 }
 
 void Game::setup()
@@ -118,14 +120,35 @@ void Game::handleInput()
 
 void Game::update()
 {
-	// TODO Update game objects.
+	for(int i = 0; i < _gameObjects.capacity(); i++)
+	{
+		if(_gameObjects[i])
+		{
+			_gameObjects[i]->update();
+
+			// delete if neccissary
+			if(_gameObjects[i]->getDeleteFlag())
+			{
+				_gameObjects.remove(i);
+				continue;
+			}
+
+			// add to render list if neccissary
+			if(_camera.onScreen(_gameObjects[i]->spritePosition()))
+				_renderList.add(_gameObjects[i]);
+		}
+	}
+
+	_camera.update();
 }
 
 void Game::render()
 {
 	SDL_RenderClear(_renderer);
 
-	// TODO Render game objects.
+	for(int i = 0; i < _renderList.size(); i++)
+		_renderList[i]->render();
+	_renderList.clear();
 
 	SDL_RenderPresent(_renderer);
 }
@@ -133,6 +156,11 @@ void Game::render()
 int Game::randomInRange(int min, int max)
 {
 	return min + rand() / (RAND_MAX / (max - min + 1) + 1);
+}
+
+Rect Game::centre(Rect original, Vector2 point)
+{
+	return Rect { point.x - (original.w / 2), point.y - (original.h / 2), original.w, original.h };
 }
 
 Game* Game::_instance = nullptr;

@@ -3,6 +3,9 @@
 
 #include <SDL.h>
 #include "camera.h"
+#include "gameobject.h"
+#include "structures/array.h"
+#include "structures/list.h"
 #include "types.h"
 
 class Game
@@ -24,8 +27,8 @@ public:
 	// Fills in the arguments with the window width and height.
 	void windowDimentions(int* width, int* height) const;
 
-	// Returns a rectangle centred on a point.
-	static Rect centre(Rect original, Vector2 point);
+	// Returns a pointer to a new GameObject to use.
+	GameObject* createGameObject();
 
 	// Returns a pointer to the SDL renderer.
 	inline SDL_Renderer* renderer() const { return _renderer; }
@@ -41,6 +44,9 @@ public:
 
 	// Returns a random integer in a range.
 	static int randomInRange(int min, int max);
+
+	// Returns a rectangle centred on a point.
+	static Rect centre(Rect original, Vector2 point);
 
 private:
 	// Gameplay setup before loop().
@@ -81,6 +87,12 @@ private:
 
 	// The camera object.
 	Camera _camera;
+
+	// Array of all GameObjects.
+	Array<GameObject> _gameObjects;
+
+	// List of GameObjects to render.
+	List<GameObject*> _renderList;
 };
 
 #endif
