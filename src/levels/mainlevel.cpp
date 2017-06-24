@@ -1,3 +1,4 @@
+#include "../behaviours/obstacle.h"
 #include "../behaviours/player.h"
 #include "../data.h"
 #include "../game.h"
@@ -24,21 +25,25 @@ void MainLevel::onLoad()
 	GameObject* sign1 = Game::instance()->createGameObject();
 	sign1->renderer()->setSprite(Data::instance()->sprite(SP_SIGN1));
 	sign1->physics()->setPosition(Vector2F { -150.0f, -125.0f });
+	sign1->setBehaviour(new ObstacleBehaviour());
 
 	// Movement help sign.
 	GameObject* sign2 = Game::instance()->createGameObject();
 	sign2->renderer()->setSprite(Data::instance()->sprite(SP_SIGN2));
 	sign2->physics()->setPosition(Vector2F { 75.0f, -100.0f });
+	sign2->setBehaviour(new ObstacleBehaviour());
 
 	// Other buttons sign.
 	GameObject* sign3 = Game::instance()->createGameObject();
 	sign3->renderer()->setSprite(Data::instance()->sprite(SP_SIGN3));
 	sign3->physics()->setPosition(Vector2F { 170.0f, -140.0f });
+	sign3->setBehaviour(new ObstacleBehaviour());
 
 	// Goat sign.
 	GameObject* sign4 = Game::instance()->createGameObject();
 	sign4->renderer()->setSprite(Data::instance()->sprite(SP_SIGN4));
 	sign4->physics()->setPosition(Vector2F { 175.0f, -60.0f });
+	sign4->setBehaviour(new ObstacleBehaviour());
 
 	Game::instance()->windowDimentions(&_winWidth, &_winHeight);
 	generateObstacles();
@@ -96,6 +101,7 @@ void MainLevel::generateObstacles(int offset)
 			// Regular obstacle.
 			obstacle->renderer()->setSprite(
 				Data::instance()->sprite(Game::randomInRange(SP_OBSTACLE1, SP_OBSTACLE4)));
+			obstacle->setBehaviour(new ObstacleBehaviour());
 		}
 	}
 }

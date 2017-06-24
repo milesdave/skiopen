@@ -1,8 +1,7 @@
 #ifndef BEHAVIOURS_BEHAVIOUR_H_
 #define BEHAVIOURS_BEHAVIOUR_H_
 
-#include "../physics.h"
-#include "../renderer.h"
+#include "../gameobject.h"
 
 class Behaviour
 {
@@ -17,11 +16,8 @@ public:
 	virtual void update() = 0;
 
 protected:
-	// Pointer to the corresponding physics component.
-	Physics* _physics = nullptr;
-
-	// Pointer to the corresponding renderer component.
-	Renderer* _renderer = nullptr;
+	// Pointer to the GameObject this behaviour belongs to.
+	GameObject* _gameObject = nullptr;
 };
 
 #endif

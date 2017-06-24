@@ -101,7 +101,11 @@ void Game::windowDimentions(int* width, int* height) const
 
 GameObject* Game::createGameObject()
 {
-	GameObject *x = _gameObjects.allocate();
+	GameObject* x = _gameObjects.allocate();
+
+	if(!x)
+		panic("createGameObject()", "Could not create a new GameObject!");
+
 	*x = GameObject();
 	return x;
 }
@@ -146,6 +150,7 @@ void Game::update()
 			// Delete the GameObject if neccissary.
 			if(_gameObjects[i]->getDeleteFlag())
 			{
+				_gameObjects[i]->setBehaviour(nullptr);
 				_gameObjects.remove(i);
 				continue;
 			}

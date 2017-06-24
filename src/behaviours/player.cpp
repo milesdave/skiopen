@@ -24,7 +24,7 @@ void PlayerBehaviour::handleInput()
 	if(Input::input(Key::Right))
 		add.x += VELOCITY_MOD.x;
 
-	_physics->addVelocity(add);
+	_gameObject->physics()->addVelocity(add);
 }
 
 void PlayerBehaviour::updateSprite()

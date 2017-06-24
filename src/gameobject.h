@@ -36,7 +36,7 @@ public:
 	inline bool getDeleteFlag() const { return _delete; }
 
 	// Sets the delete flag status.
-	inline bool setDeleteFlag(bool flag) { _delete = flag; }
+	inline void setDeleteFlag(bool flag) { _delete = flag; }
 
 	// Returns the GameObject sprite geometry.
 	Rect spritePosition() const;
