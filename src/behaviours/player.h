@@ -1,6 +1,7 @@
 #ifndef BEHAVIOURS_PLAYER_H_
 #define BEHAVIOURS_PLAYER_H_
 
+#include "../data.h"
 #include "../types.h"
 #include "behaviour.h"
 
@@ -24,15 +25,15 @@ private:
 	// Possible states for the sprite.
 	enum State
 	{
-		Down,
-		Left1,
-		Left2,
-		Left3,
-		Right1,
-		Right2,
-		Right3,
-		Collision,
-		Stopped
+		Down = SP_PLAYER_DOWN,
+		Left1 = SP_PLAYER_LEFT1,
+		Left2 = SP_PLAYER_LEFT2,
+		Left3 = SP_PLAYER_LEFT3,
+		Right1 = SP_PLAYER_RIGHT1,
+		Right2 = SP_PLAYER_RIGHT2,
+		Right3 = SP_PLAYER_RIGHT3,
+		Collision = SP_PLAYER_HIT,
+		Stopped = SP_PLAYER_GROUND
 	};
 
 	// Current sprite state.
