@@ -1,3 +1,4 @@
+#include <cmath>
 #include "game.h"
 #include "physics.h"
 
@@ -9,9 +10,9 @@ Physics::~Physics() { }
 
 void Physics::update()
 {
-	_velocity *= Game::instance()->deltaTime();
-	_position += _velocity;
-	_velocity -= _friction;
+	_position += (_velocity * Game::instance()->deltaTime());
+	_angle = (float)RAD2DEG(atan2(_velocity.y, _velocity.x));
+	applyFriction();
 }
 
 void Physics::addVelocity(Vector2F velocity)
@@ -29,4 +30,19 @@ void Physics::addVelocity(Vector2F velocity)
 		_velocity.x = _minVelocity.x;
 	if(_velocity.y < _minVelocity.y)
 		_velocity.y = _minVelocity.y;
+}
+
+void Physics::applyFriction()
+{
+	// Move X towards 0.
+	if(_velocity.x > 0.0f)
+		_velocity.x -= _friction.x;
+	else if(_velocity.x < 0.0f)
+		_velocity.x += _friction.x;
+
+	// Move Y towards 0.
+	if(_velocity.y > 0.0f)
+		_velocity.y -= _friction.y;
+	else if(_velocity.y < 0.0f)
+		_velocity.y += _friction.y;
 }

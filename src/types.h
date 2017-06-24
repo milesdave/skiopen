@@ -27,6 +27,14 @@ struct Vector2F
 		x *= a; y *= a;
 	}
 
+	Vector2F operator*(float a)
+	{
+		Vector2F v;
+		v.x = this->x * a;
+		v.y = this->y * a;
+		return v;
+	}
+
 	float x;
 	float y;
 };

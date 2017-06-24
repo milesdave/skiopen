@@ -1,6 +1,7 @@
 #ifndef BEHAVIOURS_PLAYER_H_
 #define BEHAVIOURS_PLAYER_H_
 
+#include "../types.h"
 #include "behaviour.h"
 
 class PlayerBehaviour : public Behaviour
@@ -36,6 +37,9 @@ private:
 
 	// Current sprite state.
 	State _state = Down;
+
+	// Vector to modify the velocity with.
+	static constexpr Vector2F _velocityMod = { 4.0f, 2.5f };
 };
 
 #endif

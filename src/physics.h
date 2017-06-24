@@ -44,6 +44,9 @@ public:
 	inline void setAngle(float angle) { _angle = angle; }
 
 private:
+	// Applies friction to the GameObject.
+	void applyFriction();
+
 	// Position of the GameObject.
 	Vector2F _position = { 0.0f, 0.0f };
 
@@ -57,7 +60,7 @@ private:
 	Vector2F _minVelocity = { 0.0f, 0.0f };
 
 	// Friction for the GameObject.
-	Vector2F _friction = { 0.0f, 0.0f };
+	Vector2F _friction = { 1.0f, 1.0f };
 
 	// Angle of the GameObject.
 	float _angle = 0.0f;
