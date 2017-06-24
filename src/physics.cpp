@@ -11,7 +11,6 @@ Physics::~Physics() { }
 void Physics::update()
 {
 	_position += (_velocity * Game::instance()->deltaTime());
-	_angle = (float)RAD2DEG(atan2(_velocity.y, _velocity.x));
 	applyFriction();
 }
 
@@ -30,6 +29,8 @@ void Physics::addVelocity(Vector2F velocity)
 		_velocity.x = _minVelocity.x;
 	if(_velocity.y < _minVelocity.y)
 		_velocity.y = _minVelocity.y;
+
+	calculateAngle();
 }
 
 void Physics::applyFriction()
@@ -45,4 +46,9 @@ void Physics::applyFriction()
 		_velocity.y -= _friction.y;
 	else if(_velocity.y < 0.0f)
 		_velocity.y += _friction.y;
+}
+
+void Physics::calculateAngle()
+{
+	_angle = (float)RAD2DEG(atan2(_velocity.y, _velocity.x));
 }

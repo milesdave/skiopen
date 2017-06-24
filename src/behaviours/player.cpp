@@ -73,6 +73,8 @@ void PlayerBehaviour::updateSprite()
 	case Right3:
 		if(angle > 30.0f)
 			_state = Right2;
+		else if(velocity.x == 0.0f)
+			_state = Down;
 		break;
 	case Stopped:
 		if(velocity.x != 0.0f || velocity.y != 0.0f)

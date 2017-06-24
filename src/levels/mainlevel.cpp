@@ -14,7 +14,7 @@ void MainLevel::onLoad()
 	// Create the player object.
 	_player = Game::instance()->createGameObject();
 	_player->renderer()->setSprite(Data::instance()->sprite(SP_PLAYER_DOWN));
-	_player->physics()->setFriction(Vector2F { 0.5f, 0.5f });
+	_player->physics()->setFriction(Vector2F { 1.0f, 0.5f });
 	_player->physics()->setMaxVelocity(Vector2F { 325.0f, 500.0f });
 	_player->physics()->setMinVelocity(Vector2F { -325.0f, 0.0f });
 	_player->setBehaviour(new PlayerBehaviour());

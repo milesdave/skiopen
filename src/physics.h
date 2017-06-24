@@ -23,7 +23,7 @@ public:
 	inline Vector2F getVelocity() const { return _velocity; }
 
 	// Sets the GameObject velocity.
-	inline void setVelocity(Vector2F velocity) { _velocity = velocity; }
+	inline void setVelocity(Vector2F velocity) { _velocity = velocity; calculateAngle(); }
 
 	// Adds the specified velocity to the GameObject.
 	void addVelocity(Vector2F velocity);
@@ -46,6 +46,9 @@ public:
 private:
 	// Applies friction to the GameObject.
 	void applyFriction();
+
+	// Calculates the angle based on the velocity,
+	void calculateAngle();
 
 	// Position of the GameObject.
 	Vector2F _position = { 0.0f, 0.0f };
