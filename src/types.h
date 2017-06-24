@@ -12,12 +12,12 @@ struct Vector2
 
 struct Vector2F
 {
-	void operator+=(const Vector2F &v)
+	void operator+=(const Vector2F& v)
 	{
 		x += v.x; y += v.y;
 	}
 
-	void operator-=(const Vector2F &v)
+	void operator-=(const Vector2F& v)
 	{
 		x -= v.x; y -= v.y;
 	}

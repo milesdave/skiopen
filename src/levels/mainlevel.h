@@ -10,7 +10,7 @@ class MainLevel : public Level
 public:
 	MainLevel();
 
-	~MainLevel();
+	~MainLevel() override;
 
 	// Level functions.
 	void onLoad() override;

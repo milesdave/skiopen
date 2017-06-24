@@ -42,16 +42,16 @@ public:
 	Rect spritePosition() const;
 
 private:
-	// should the GameObject be deleted?
+	// State of whether or not the GameObject should be deleted.
 	bool _delete = false;
 
-	// renderer component
+	// The renderer component object.
 	Renderer _renderer;
 
-	// physics component
+	// The physics component object.
 	Physics _physics;
 
-	// behavior component
+	// The behavior component object.
 	Behaviour* _behaviour = nullptr;
 };
 

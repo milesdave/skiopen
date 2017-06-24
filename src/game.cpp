@@ -143,14 +143,14 @@ void Game::update()
 		{
 			_gameObjects[i]->update();
 
-			// delete if neccissary
+			// Delete the GameObject if neccissary.
 			if(_gameObjects[i]->getDeleteFlag())
 			{
 				_gameObjects.remove(i);
 				continue;
 			}
 
-			// add to render list if neccissary
+			// Add the GameObject to the render list if neccissary.
 			if(_camera.onScreen(_gameObjects[i]->spritePosition()))
 				_renderList.add(_gameObjects[i]);
 		}

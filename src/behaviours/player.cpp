@@ -10,6 +10,11 @@ PlayerBehaviour::~PlayerBehaviour() { }
 
 void PlayerBehaviour::update()
 {
+	handleInput();
+}
+
+void PlayerBehaviour::handleInput()
+{
 	if(Input::input(Up))
 		printf("up\n");
 

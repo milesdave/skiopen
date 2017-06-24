@@ -30,6 +30,7 @@ void GameObject::setBehaviour(Behaviour *behaviour)
 
 	_behaviour = behaviour;
 	_behaviour->_physics = &_physics;
+	_behaviour->_renderer = &_renderer;
 }
 
 Rect GameObject::spritePosition() const
