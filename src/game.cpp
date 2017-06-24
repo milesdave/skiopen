@@ -157,6 +157,9 @@ void Game::update()
 	}
 
 	_camera.update();
+
+	if(_currentLevel)
+		_currentLevel->update();
 }
 
 void Game::render()

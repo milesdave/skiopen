@@ -16,13 +16,13 @@ void PlayerBehaviour::handleInput()
 	Vector2F add = { 0.0f, 0.0f };
 
 	if(Input::input(Key::Up))
-		add.y -= _velocityMod.y;
+		add.y -= VELOCITY_MOD.y;
 	if(Input::input(Key::Down))
-		add.y += _velocityMod.y;
+		add.y += VELOCITY_MOD.y;
 	if(Input::input(Key::Left))
-		add.x -= _velocityMod.x;
+		add.x -= VELOCITY_MOD.x;
 	if(Input::input(Key::Right))
-		add.x += _velocityMod.x;
+		add.x += VELOCITY_MOD.x;
 
 	_physics->addVelocity(add);
 }

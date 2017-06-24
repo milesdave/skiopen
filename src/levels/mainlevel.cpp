@@ -19,11 +19,35 @@ void MainLevel::onLoad()
 	_player->setBehaviour(new PlayerBehaviour());
 
 	Game::instance()->camera()->setFocus(_player);
+
+	// Game title.
+	GameObject* sign1 = Game::instance()->createGameObject();
+	sign1->renderer()->setSprite(Data::instance()->sprite(SP_SIGN1));
+	sign1->physics()->setPosition(Vector2F { -150.0f, -125.0f });
+
+	// Movement help sign.
+	GameObject* sign2 = Game::instance()->createGameObject();
+	sign2->renderer()->setSprite(Data::instance()->sprite(SP_SIGN2));
+	sign2->physics()->setPosition(Vector2F { 75.0f, -100.0f });
+
+	// Other buttons sign.
+	GameObject* sign3 = Game::instance()->createGameObject();
+	sign3->renderer()->setSprite(Data::instance()->sprite(SP_SIGN3));
+	sign3->physics()->setPosition(Vector2F { 170.0f, -140.0f });
+
+	// Goat sign.
+	GameObject* sign4 = Game::instance()->createGameObject();
+	sign4->renderer()->setSprite(Data::instance()->sprite(SP_SIGN4));
+	sign4->physics()->setPosition(Vector2F { 175.0f, -60.0f });
+
+	Game::instance()->windowDimentions(&_winWidth, &_winHeight);
+	generateObstacles();
 }
 
 void MainLevel::update()
 {
-	// TODO
+	if(_player->physics()->getPosition().y > _obstacleTile.y)
+		generateObstacles(_winHeight);
 }
 
 void MainLevel::render()
@@ -39,4 +63,39 @@ void MainLevel::pause()
 void MainLevel::onExit()
 {
 	// TODO
+}
+
+void MainLevel::generateObstacles(int offset)
+{
+	// Player geometry.
+	Rect player = _player->spritePosition();
+
+	// Tile geometry.
+	_obstacleTile.w = _winWidth * 3;
+	_obstacleTile.h = _winHeight;
+	_obstacleTile.x = player.x - ((_obstacleTile.w / 2) + (player.w / 2));
+	_obstacleTile.y = player.y + offset;
+
+	// Spawn obstacles
+	for(int i = 0; i < OBSTACLES; i++)
+	{
+		// Random obstacle position.
+		Vector2F randPosition = {
+			(float)Game::randomInRange(_obstacleTile.x, _obstacleTile.x + _obstacleTile.w),
+			(float)Game::randomInRange(_obstacleTile.y, _obstacleTile.y + _obstacleTile.h) };
+
+		GameObject* obstacle = Game::instance()->createGameObject();
+		obstacle->physics()->setPosition(randPosition);
+
+		if(i == 0)
+		{
+			// TODO Moving obstacle.
+		}
+		else
+		{
+			// Regular obstacle.
+			obstacle->renderer()->setSprite(
+				Data::instance()->sprite(Game::randomInRange(SP_OBSTACLE1, SP_OBSTACLE4)));
+		}
+	}
 }

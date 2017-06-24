@@ -77,18 +77,27 @@ private:
 #define OBSTACLE_FRAMES 1
 
 #define SP_OBSTACLE1 9
+#define SP_OBSTACLE1_ROW 0
+
 #define SP_OBSTACLE2 10
+#define SP_OBSTACLE2_ROW 1
+
 #define SP_OBSTACLE3 11
+#define SP_OBSTACLE3_ROW 2
+
 #define SP_OBSTACLE4 12
+#define SP_OBSTACLE4_ROW 3
 
 /* Goat Sprites */
 
 #define SP_GOAT_LEFT 13
+#define SP_GOAT_LEFT_ROW 0
 #define SP_GOAT_LEFT_FRAMES 7
 #define SP_GOAT_LEFT_DURATION 1.5f
 #define SP_GOAT_LEFT_LOOP true
 
 #define SP_GOAT_RIGHT 14
+#define SP_GOAT_RIGHT_ROW 1
 #define SP_GOAT_RIGHT_FRAMES 7
 #define SP_GOAT_RIGHT_DURATION 1.5f
 #define SP_GOAT_RIGHT_LOOP true
@@ -100,10 +109,16 @@ private:
 #define SIGN_FRAMES 1
 
 #define SP_SIGN1 15
+#define SP_SIGN1_ROW 0
+
 #define SP_SIGN2 16
+#define SP_SIGN2_ROW 1
+
 #define SP_SIGN3 17
+#define SP_SIGN3_ROW 2
 
 #define SP_SIGN4 18
+#define SP_SIGN4_ROW 0
 #define SP_SIGN4_FRAMES 30
 #define SP_SIGN4_DURATION 9.0f
 #define SP_SIGN4_LOOP true

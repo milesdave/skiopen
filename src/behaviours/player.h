@@ -39,7 +39,7 @@ private:
 	State _state = Down;
 
 	// Vector to modify the velocity with.
-	static constexpr Vector2F _velocityMod = { 4.0f, 2.5f };
+	static constexpr Vector2F VELOCITY_MOD = { 4.0f, 2.5f };
 };
 
 #endif
