@@ -31,6 +31,9 @@ public:
 	// Sets the maximum velocity of the GameObject.
 	inline void setMaxVelocity(Vector2F maxVelocity) { _maxVelocity = maxVelocity; }
 
+	// Sets the minimum velocity of the GameObject.
+	inline void setMinVelocity(Vector2F minVelocity) { _minVelocity = minVelocity; }
+
 	// Sets the friction for the GameObject.
 	inline void setFriction(Vector2F friction) { _friction = friction; }
 
@@ -49,6 +52,9 @@ private:
 
 	// Maximum velocity of the GameObject.
 	Vector2F _maxVelocity = { 0.0f, 0.0f };
+
+	// Maximum negative velocity of the GameObject.
+	Vector2F _minVelocity = { 0.0f, 0.0f };
 
 	// Friction for the GameObject.
 	Vector2F _friction = { 0.0f, 0.0f };
