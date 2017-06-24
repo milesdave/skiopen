@@ -1,16 +1,21 @@
 #include "game.h"
 #include "physics.h"
 
+#define RAD2DEG(x) ((x / M_PI) * 180)
+
 Physics::Physics() { }
 
 Physics::~Physics() { }
 
 void Physics::update()
 {
-	m_velocity *= Game::instance()->deltaTime();
-	m_position += m_velocity;
+	_velocity *= Game::instance()->deltaTime();
+	_position += _velocity;
 
-	// TODO Friction.
-	m_velocity.x = 0.0f;
-	m_velocity.y = 0.0f;
+	// TODO Decay velocity.
+}
+
+void Physics::addVelocity(Vector2F velocity)
+{
+	// TODO
 }

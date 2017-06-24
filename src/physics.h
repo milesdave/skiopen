@@ -14,23 +14,47 @@ public:
 	void update();
 
 	// Returns the position of the GameObject.
-	inline Vector2F getPosition() const { return m_position; }
+	inline Vector2F getPosition() const { return _position; }
 
 	// Sets the GameObject position.
-	inline void setPosition(Vector2F position) { m_position = position; }
+	inline void setPosition(Vector2F position) { _position = position; }
 
 	// Returns the velocity of the GameObject.
-	inline Vector2F getVelocity() const { return m_velocity; }
+	inline Vector2F getVelocity() const { return _velocity; }
 
 	// Sets the GameObject velocity.
-	inline void setVelocity(Vector2F velocity) { m_velocity = velocity; }
+	inline void setVelocity(Vector2F velocity) { _velocity = velocity; }
+
+	// Adds the specified velocity to the GameObject.
+	void addVelocity(Vector2F velocity);
+
+	// Sets the maximum velocity of the GameObject.
+	inline void setMaxVelocity(Vector2F maxVelocity) { _maxVelocity = maxVelocity; }
+
+	// Sets the friction for the GameObject.
+	inline void setFriction(Vector2F friction) { _friction = friction; }
+
+	// Returns the angle of the GameObject.
+	inline float getAngle() const { return _angle; }
+
+	// Sets the angle of the GameObject.
+	inline void setAngle(float angle) { _angle = angle; }
 
 private:
 	// Position of the GameObject.
-	Vector2F m_position = { 0.0f, 0.0f };
+	Vector2F _position = { 0.0f, 0.0f };
 
 	// Velocity of the GameObject.
-	Vector2F m_velocity = { 0.0f, 0.0f };
+	Vector2F _velocity = { 0.0f, 0.0f };
+
+	// Maximum velocity of the GameObject.
+	Vector2F _maxVelocity = { 0.0f, 0.0f };
+
+	// Friction for the GameObject.
+	Vector2F _friction = { 0.0f, 0.0f };
+
+	// Angle of the GameObject.
+	float _angle = 0.0f;
 };
 
 #endif
