@@ -33,8 +33,8 @@ void Game::init()
 	if((SDL_GetCurrentDisplayMode(0, &screenInfo)) != 0)
 		panic("SDL_GetCurrentDisplayMode()", SDL_GetError());
 
-	_winWidth = screenInfo.w / 2;
-	_winHeight = screenInfo.h / 2;
+	_winWidth = (int)(screenInfo.w * 0.5f);
+	_winHeight = (int)(screenInfo.h * 0.85f);
 
 	_window = SDL_CreateWindow("SkiOpen", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _winWidth, _winHeight, SDL_WINDOW_SHOWN);
 	if(!_window)
@@ -44,7 +44,7 @@ void Game::init()
 	if(!_renderer)
 		panic("SDL_CreateRenderer()", SDL_GetError());
 
-	SDL_SetRenderDrawColor(_renderer, 0x00, 0x00, 0x00, 0xFF);
+	SDL_SetRenderDrawColor(_renderer, 0xF2, 0xF2, 0xF2, 0xFF);
 
 	srand((unsigned)time(nullptr));
 

@@ -41,7 +41,7 @@ void Camera::setFocus(GameObject *focus)
 
 	// Centre on focus' position.
 	_geometry.x = (int)position.x - (_geometry.w / 2);
-	_geometry.y = (int)position.y - (_geometry.h / 2);
+	_geometry.y = (int)position.y - (_geometry.h / 3);
 }
 
 void Camera::setGeometry(Rect geometry)
@@ -51,7 +51,7 @@ void Camera::setGeometry(Rect geometry)
 	_deadzone.w = _geometry.w / 2;
 	_deadzone.h = _geometry.h / 2;
 	_deadzone.x = (_geometry.w / 2) - (_deadzone.w / 2);
-	_deadzone.y = (_geometry.h / 2) - (_deadzone.h / 2);
+	_deadzone.y = (_geometry.h / 3) - (_deadzone.h / 2);
 }
 
 bool Camera::onScreen(Rect rect) const
