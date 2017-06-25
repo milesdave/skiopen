@@ -1,4 +1,5 @@
 #include "behaviours/behaviour.h"
+#include "game.h"
 #include "gameobject.h"
 #include "sprite.h"
 
@@ -38,16 +39,16 @@ Rect GameObject::spritePosition() const
 {
 	Rect sprite = { 0, 0, 0, 0 };
 
-	Vector2F position = _physics.getPosition();
-	sprite.x = (int)position.x;
-	sprite.y = (int)position.y;
-
 	if(_renderer.getSprite())
 	{
 		Rect dimentions = _renderer.getSprite()->clips[0];
 		sprite.w = dimentions.w;
 		sprite.h = dimentions.h;
 	}
+
+	Vector2F position = _physics.getPosition();
+	Vector2 intPosition = { (int)position.x, (int)position.y };
+	sprite = Game::centre(sprite, intPosition);
 
 	return sprite;
 }
