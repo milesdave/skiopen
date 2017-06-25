@@ -32,6 +32,7 @@
     <ClCompile Include="src\physics.cpp" />
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\sprite.cpp" />
+    <ClCompile Include="src\structures\quadtree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\behaviours\behaviour.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="src\sprite.h" />
     <ClInclude Include="src\structures\array.h" />
     <ClInclude Include="src\structures\list.h" />
+    <ClInclude Include="src\structures\quadtree.h" />
     <ClInclude Include="src\types.h" />
   </ItemGroup>
   <ItemGroup>
