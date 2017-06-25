@@ -48,8 +48,8 @@ void Camera::setGeometry(Rect geometry)
 {
 	_geometry = geometry;
 
-	_deadzone.w = _geometry.w / 2;
-	_deadzone.h = _geometry.h / 2;
+	_deadzone.w = _geometry.w / 3;
+	_deadzone.h = _geometry.h / 3;
 	_deadzone.x = (_geometry.w / 2) - (_deadzone.w / 2);
 	_deadzone.y = (_geometry.h / 3) - (_deadzone.h / 2);
 }
