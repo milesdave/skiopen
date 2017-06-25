@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\behaviours\goat.cpp" />
     <ClCompile Include="src\behaviours\obstacle.cpp" />
     <ClCompile Include="src\behaviours\player.cpp" />
     <ClCompile Include="src\camera.cpp" />
@@ -34,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\behaviours\behaviour.h" />
+    <ClInclude Include="src\behaviours\goat.h" />
     <ClInclude Include="src\behaviours\obstacle.h" />
     <ClInclude Include="src\behaviours\player.h" />
     <ClInclude Include="src\camera.h" />

@@ -1,3 +1,4 @@
+#include "../behaviours/goat.h"
 #include "../behaviours/obstacle.h"
 #include "../behaviours/player.h"
 #include "../data.h"
@@ -94,7 +95,22 @@ void MainLevel::generateObstacles(int offset)
 
 		if(i == 0)
 		{
-			// TODO Moving obstacle.
+			// Moving obstacle.
+			GoatBehaviour* goat = new GoatBehaviour();
+			GoatBehaviour::Direction direction =
+				(GoatBehaviour::Direction)Game::randomInRange(0, 1);
+			goat->setDirection(direction);
+			obstacle->setBehaviour(goat);
+
+			switch(direction)
+			{
+				case GoatBehaviour::Direction::Left:
+					obstacle->renderer()->setSprite(Data::instance()->sprite(SP_GOAT_LEFT));
+					break;
+				case GoatBehaviour::Direction::Right:
+					obstacle->renderer()->setSprite(Data::instance()->sprite(SP_GOAT_RIGHT));
+					break;
+			}
 		}
 		else
 		{

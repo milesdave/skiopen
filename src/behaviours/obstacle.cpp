@@ -8,6 +8,11 @@ ObstacleBehaviour::~ObstacleBehaviour() { }
 
 void ObstacleBehaviour::update()
 {
+	checkDelete();
+}
+
+void ObstacleBehaviour::checkDelete()
+{
 	Rect geometry = _gameObject->spritePosition();
 
 	// Delete if we're above the camera.

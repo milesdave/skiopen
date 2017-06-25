@@ -8,10 +8,14 @@ class ObstacleBehaviour : public Behaviour
 public:
 	ObstacleBehaviour();
 
-	~ObstacleBehaviour();
+	~ObstacleBehaviour() override;
 
 	// Updates the obstacle GameObject.
 	void update() override;
+
+protected:
+	// Checks if the GameObject should be deleted.
+	void checkDelete();
 };
 
 #endif
