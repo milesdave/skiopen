@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <ctime>
+#include "behaviours/behaviour.h"
 #include "data.h"
 #include "game.h"
 #include "input.h"
@@ -150,7 +151,13 @@ void Game::update()
 {
 	_quadtree->clear();
 
-	// TODO Centre the Quadtree on the player.
+	// Centre the Quadtree on the player.
+	if(_player)
+	{
+		Rect bounds = { 0, 0, _winWidth, _winHeight };
+		bounds = Game::centre(bounds, _player->physics()->getPosition());
+		_quadtree->setBounds(bounds);
+	}
 
 	for(int i = 0; i < _gameObjects.capacity(); i++)
 	{
@@ -195,7 +202,26 @@ void Game::render()
 
 void Game::checkCollisions()
 {
-	// TODO
+	if(!_player)
+		return;
+
+	List<GameObject*> possibleCollisions;
+	_quadtree->retrieve(&possibleCollisions, _player);
+
+	Hitbox playerHitbox = _player->physics()->getHitbox();
+
+	for(int i = 0; i < possibleCollisions.size(); i++)
+	{
+		if(possibleCollisions[i] == _player)
+			continue;
+
+		Hitbox otherHitbox = possibleCollisions[i]->physics()->getHitbox();
+
+		// Check for Hitbox overlap.
+		if(playerHitbox.x < (otherHitbox.x + otherHitbox.w) && (playerHitbox.x + playerHitbox.w) > otherHitbox.x)
+			if(playerHitbox.y < (otherHitbox.y + otherHitbox.h) && (playerHitbox.y + playerHitbox.h) > otherHitbox.y)
+				_player->getBehavior()->collide();
+	}
 }
 
 int Game::randomInRange(int min, int max)

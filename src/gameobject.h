@@ -26,11 +26,11 @@ public:
 	// Returns a pointer to the physics component.
 	inline Physics* physics() { return &_physics; }
 
-	// Returns a pointer to the behavior component.
+	// Returns a pointer to the behaviour component.
 	inline Behaviour* getBehavior() const { return _behaviour; }
 
-	// Sets the behavior component.
-	void setBehaviour(Behaviour* behavior);
+	// Sets the behaviour component.
+	void setBehaviour(Behaviour* behaviour);
 
 	// Gets the delete flag status.
 	inline bool getDeleteFlag() const { return _delete; }
@@ -51,7 +51,7 @@ private:
 	// The physics component object.
 	Physics _physics;
 
-	// The behavior component object.
+	// The behaviour component object.
 	Behaviour* _behaviour = nullptr;
 };
 

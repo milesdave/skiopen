@@ -1,6 +1,8 @@
 #include "../input.h"
 #include "player.h"
 
+#include <cstdio> // TODO
+
 PlayerBehaviour::PlayerBehaviour() { }
 
 PlayerBehaviour::~PlayerBehaviour() { }
@@ -9,6 +11,11 @@ void PlayerBehaviour::update()
 {
 	handleInput();
 	updateSprite();
+}
+
+void PlayerBehaviour::collide()
+{
+	printf("Ouch!\n");
 }
 
 void PlayerBehaviour::handleInput()

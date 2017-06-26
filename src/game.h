@@ -47,6 +47,9 @@ public:
 	// Returns a pointer to this singular Game instance.
 	static inline Game* instance() { return _instance; }
 
+	// Sets the player GameObject.
+	inline void setPlayer(GameObject* player) { _player = player; }
+
 	// Returns a random integer in a range.
 	static int randomInRange(int min, int max);
 
@@ -111,6 +114,9 @@ private:
 
 	// Quadtree for collision detection.
 	Quadtree* _quadtree = nullptr;
+
+	// The player GameObject.
+	GameObject* _player = nullptr;
 };
 
 #endif

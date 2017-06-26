@@ -22,6 +22,7 @@ void MainLevel::onLoad()
 	_player->setBehaviour(new PlayerBehaviour());
 
 	Game::instance()->camera()->setFocus(_player);
+	Game::instance()->setPlayer(_player);
 
 	// Game title.
 	GameObject* sign1 = Game::instance()->createGameObject();
@@ -93,6 +94,7 @@ void MainLevel::generateObstacles(int offset)
 
 		GameObject* obstacle = Game::instance()->createGameObject();
 		obstacle->physics()->setPosition(randPosition);
+		obstacle->physics()->setHitbox(Hitbox { 0, 0, 32, 32 });
 
 		if(i == 0)
 		{

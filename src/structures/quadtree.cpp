@@ -76,7 +76,15 @@ void Quadtree::insert(GameObject* gameObject)
 
 GOList* Quadtree::retrieve(GOList* gameObjects, GameObject* subject)
 {
-	// TODO
+	int index = getIndex(subject->physics()->getHitbox());
+
+	// Recursively find the correct node.
+	if(index != -1 && _nodes[0])
+		_nodes[index]->retrieve(gameObjects, subject);
+	else // Return all GameObjects from node.
+		for(int i = 0; i < _gameObjects.size(); i++)
+			gameObjects->add(_gameObjects[i]);
+
 	return gameObjects;
 }
 

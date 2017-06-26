@@ -15,6 +15,9 @@ public:
 	// Updates the player GameObject.
 	void update() override;
 
+	// Handles a collision event.
+	void collide() override;
+
 private:
 	// Handle user interaction.
 	void handleInput();
