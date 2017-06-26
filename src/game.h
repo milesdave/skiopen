@@ -7,6 +7,7 @@
 #include "levels/level.h"
 #include "structures/array.h"
 #include "structures/list.h"
+#include "structures/quadtree.h"
 #include "types.h"
 
 class Game
@@ -65,6 +66,9 @@ private:
 	// Renders the game.
 	void render();
 
+	// Checks if any GameObject has collided with another.
+	void checkCollisions();
+
 	// Frame rate.
 	static constexpr unsigned int FPS = 60;
 
@@ -103,6 +107,9 @@ private:
 
 	// Pointer to the current level.
 	Level* _currentLevel = nullptr;
+
+	// Quadtree for collision detection.
+	Quadtree* _quadtree = nullptr;
 };
 
 #endif

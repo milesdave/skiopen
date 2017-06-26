@@ -13,11 +13,14 @@ Game::Game()
 
 Game::~Game()
 {
-	delete Data::instance();
 	Input::closeController();
+	delete Data::instance();
 
 	for(int i = 0; i < LEVELS; i++)
 		delete _levels[i];
+
+	if(_quadtree)
+		delete _quadtree;
 
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);
@@ -36,11 +39,13 @@ void Game::init()
 	_winWidth = (int)(screenInfo.w * 0.5f);
 	_winHeight = (int)(screenInfo.h * 0.85f);
 
-	_window = SDL_CreateWindow("SkiOpen", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _winWidth, _winHeight, SDL_WINDOW_SHOWN);
+	_window = SDL_CreateWindow("SkiOpen", SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED, _winWidth, _winHeight, SDL_WINDOW_SHOWN);
 	if(!_window)
 		panic("SDL_CreateWindow()", SDL_GetError());
 
-	_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	_renderer = SDL_CreateRenderer(_window, -1,
+		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if(!_renderer)
 		panic("SDL_CreateRenderer()", SDL_GetError());
 
@@ -51,6 +56,8 @@ void Game::init()
 	Data::instance()->load();
 	Input::initController();
 	_camera.setGeometry(Rect { 0, 0, _winWidth, _winHeight });
+
+	_quadtree = new Quadtree(0, Rect { 0, 0, _winWidth, _winHeight });
 
 	setup();
 }
@@ -141,6 +148,10 @@ void Game::handleInput()
 
 void Game::update()
 {
+	_quadtree->clear();
+
+	// TODO Centre the Quadtree on the player.
+
 	for(int i = 0; i < _gameObjects.capacity(); i++)
 	{
 		if(_gameObjects[i])
@@ -155,11 +166,15 @@ void Game::update()
 				continue;
 			}
 
+			_quadtree->insert(_gameObjects[i]);
+
 			// Add the GameObject to the render list if neccissary.
 			if(_camera.onScreen(_gameObjects[i]->spritePosition()))
 				_renderList.add(_gameObjects[i]);
 		}
 	}
+
+	checkCollisions();
 
 	_camera.update();
 
@@ -178,6 +193,11 @@ void Game::render()
 	SDL_RenderPresent(_renderer);
 }
 
+void Game::checkCollisions()
+{
+	// TODO
+}
+
 int Game::randomInRange(int min, int max)
 {
 	return min + rand() / (RAND_MAX / (max - min + 1) + 1);
@@ -185,7 +205,8 @@ int Game::randomInRange(int min, int max)
 
 Rect Game::centre(Rect original, Vector2 point)
 {
-	return Rect { point.x - (original.w / 2), point.y - (original.h / 2), original.w, original.h };
+	return Rect { point.x - (original.w / 2),
+		point.y - (original.h / 2), original.w, original.h };
 }
 
 Game* Game::_instance = nullptr;
