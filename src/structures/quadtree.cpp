@@ -60,6 +60,32 @@ void Quadtree::split()
 
 int Quadtree::getIndex(Hitbox hitbox)
 {
-	// TODO
+	int index = -1;
+	float vertMid = (float)(_bounds.x + (_bounds.w / 2));
+	float horizMid = (float)(_bounds.y + (_bounds.h / 2));
+
+	// The Hitbox can fit into the top half.
+	bool top = hitbox.y < horizMid && hitbox.y + hitbox.h < horizMid;
+
+	// The Hitbox can fit into the bottom half.
+	bool bottom = hitbox.y > horizMid;
+
+	// The hitbox can fit into the left half.
+	if(hitbox.x < vertMid && hitbox.x + hitbox.w < vertMid)
+	{
+		if(top)
+			index = 1; // Top left quadrant.
+		else if(bottom)
+			index = 2; // Bottom left quadrant.
+	}
+	// The hitbox can fit into the right half.
+	else if(hitbox.x > vertMid)
+	{
+		if(top)
+			index = 0; // Top right quadrant.
+		else if(bottom)
+			index = 3; // Bottom right quadrant.
+	}
+
 	return 0;
 }
