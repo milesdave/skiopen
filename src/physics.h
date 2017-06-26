@@ -43,6 +43,12 @@ public:
 	// Sets the angle of the GameObject.
 	inline void setAngle(float angle) { _angle = angle; }
 
+	// Returns the Hitbox for the GameObject.
+	Hitbox getHitbox();
+
+	// Sets the Hitbox for the GameObject.
+	inline void setHitbox(Hitbox hitbox) { _hitbox = hitbox; }
+
 private:
 	// Applies friction to the GameObject.
 	void applyFriction();
@@ -64,6 +70,9 @@ private:
 
 	// Friction for the GameObject.
 	Vector2F _friction = { 1.0f, 1.0f };
+
+	// The hitbox of the GameObject.
+	Hitbox _hitbox = { 0, 0, 0, 0 };
 
 	// Angle of the GameObject.
 	float _angle = 0.0f;

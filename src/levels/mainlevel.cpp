@@ -18,6 +18,7 @@ void MainLevel::onLoad()
 	_player->physics()->setFriction(Vector2F { 1.0f, 0.5f });
 	_player->physics()->setMaxVelocity(Vector2F { 325.0f, 500.0f });
 	_player->physics()->setMinVelocity(Vector2F { -325.0f, 0.0f });
+	_player->physics()->setHitbox(Hitbox { 0, 0, 32, 32 });
 	_player->setBehaviour(new PlayerBehaviour());
 
 	Game::instance()->camera()->setFocus(_player);

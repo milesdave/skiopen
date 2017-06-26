@@ -209,4 +209,9 @@ Rect Game::centre(Rect original, Vector2 point)
 		point.y - (original.h / 2), original.w, original.h };
 }
 
+Rect Game::centre(Rect original, Vector2F point)
+{
+	return Game::centre(original, Vector2 { (int)point.x, (int)point.y });
+}
+
 Game* Game::_instance = nullptr;

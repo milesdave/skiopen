@@ -46,9 +46,7 @@ Rect GameObject::spritePosition() const
 		sprite.h = dimentions.h;
 	}
 
-	Vector2F position = _physics.getPosition();
-	Vector2 intPosition = { (int)position.x, (int)position.y };
-	sprite = Game::centre(sprite, intPosition);
+	sprite = Game::centre(sprite, _physics.getPosition());
 
 	return sprite;
 }

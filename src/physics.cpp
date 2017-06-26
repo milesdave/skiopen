@@ -12,6 +12,7 @@ void Physics::update()
 {
 	_position += (_velocity * Game::instance()->deltaTime());
 	applyFriction();
+	calculateAngle();
 }
 
 void Physics::addVelocity(Vector2F velocity)
@@ -51,4 +52,9 @@ void Physics::applyFriction()
 void Physics::calculateAngle()
 {
 	_angle = (float)RAD2DEG(atan2(_velocity.y, _velocity.x));
+}
+
+Hitbox Physics::getHitbox()
+{
+	return Game::centre(_hitbox, _position);
 }

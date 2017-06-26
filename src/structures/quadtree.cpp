@@ -33,7 +33,45 @@ void Quadtree::clear()
 
 void Quadtree::insert(GameObject* gameObject)
 {
-	// TODO
+	if(_nodes[0])
+	{
+		int index = getIndex(gameObject->physics()->getHitbox());
+
+		// Recursively insert into subnode.
+		if(index != -1)
+		{
+			_nodes[index]->insert(gameObject);
+			return;
+		}
+	}
+
+	// GameObject now inserted into correct subnode.
+	_gameObjects.add(gameObject);
+
+	// Handle more GameObjects than this node should have.
+	if(_gameObjects.size() > MAX_OBJECTS && _level < MAX_LEVELS)
+	{
+		// Node needs to be split.
+		if(!_nodes[0])
+			split();
+
+		int i = 0;
+		while(i < _gameObjects.size())
+		{
+			int index = getIndex(_gameObjects[i]->physics()->getHitbox());
+
+			if(index != -1)
+			{
+				// Move GameObject to it's new node.
+				_nodes[i]->insert(_gameObjects[i]);
+				_gameObjects.remove(i);
+			}
+			else
+			{
+				i++;
+			}
+		}
+	}
 }
 
 GOList* Quadtree::retrieve(GOList* gameObjects, GameObject* subject)
