@@ -27,7 +27,7 @@ public:
 	inline Physics* physics() { return &_physics; }
 
 	// Returns a pointer to the behaviour component.
-	inline Behaviour* getBehavior() const { return _behaviour; }
+	inline Behaviour* getBehaviour() const { return _behaviour; }
 
 	// Sets the behaviour component.
 	void setBehaviour(Behaviour* behaviour);

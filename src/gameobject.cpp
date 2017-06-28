@@ -24,7 +24,7 @@ void GameObject::render()
 	_renderer.render(_physics.getPosition());
 }
 
-void GameObject::setBehaviour(Behaviour *behaviour)
+void GameObject::setBehaviour(Behaviour* behaviour)
 {
 	if(_behaviour)
 		delete _behaviour;

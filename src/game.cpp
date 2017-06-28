@@ -220,7 +220,7 @@ void Game::checkCollisions()
 		// Check for Hitbox overlap.
 		if(playerHitbox.x < (otherHitbox.x + otherHitbox.w) && (playerHitbox.x + playerHitbox.w) > otherHitbox.x)
 			if(playerHitbox.y < (otherHitbox.y + otherHitbox.h) && (playerHitbox.y + playerHitbox.h) > otherHitbox.y)
-				_player->getBehavior()->collide();
+				_player->getBehaviour()->collide();
 	}
 }
 
