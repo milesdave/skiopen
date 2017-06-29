@@ -1,21 +1,33 @@
 #include "../input.h"
 #include "player.h"
 
-#include <cstdio> // TODO
-
 PlayerBehaviour::PlayerBehaviour() { }
 
 PlayerBehaviour::~PlayerBehaviour() { }
 
 void PlayerBehaviour::update()
 {
-	handleInput();
+	if(_state != Collision)
+		handleInput();
+	else
+		handleCollision();
+
 	updateSprite();
 }
 
 void PlayerBehaviour::collide()
 {
-	printf("Ouch!\n");
+	// We're already in the collision state.
+	if(_state == Collision)
+		return;
+	// We're stuck in the same/another object.
+	else if(_state == Stopped)
+		_gameObject->physics()->addVelocity(Vector2F { 0.0f, 150.0f });
+
+	_state = Collision;
+	_gameObject->physics()->setFriction(Vector2F { 10.0f, 10.0f });
+	_gameObject->renderer()->setSprite(
+		Data::instance()->sprite((int)_state));
 }
 
 void PlayerBehaviour::handleInput()
@@ -32,6 +44,22 @@ void PlayerBehaviour::handleInput()
 		add.x += VELOCITY_MOD.x;
 
 	_gameObject->physics()->addVelocity(add);
+}
+
+void PlayerBehaviour::handleCollision()
+{
+	Vector2F velocity = _gameObject->physics()->getVelocity();
+
+	// Player has stopped moving.
+	if(velocity.x == 0.0f && velocity.y == 0.0f)
+	{
+		// TODO Start timer.
+
+		_state = Stopped;
+		_gameObject->physics()->setFriction(Vector2F { 1.0f, 0.5f });
+		_gameObject->renderer()->setSprite(
+			Data::instance()->sprite((int)_state));
+	}
 }
 
 void PlayerBehaviour::updateSprite()

@@ -12,7 +12,6 @@ void Physics::update()
 {
 	_position += (_velocity * Game::instance()->deltaTime());
 	applyFriction();
-	calculateAngle();
 }
 
 void Physics::addVelocity(Vector2F velocity)
@@ -38,15 +37,29 @@ void Physics::applyFriction()
 {
 	// Move X towards 0.
 	if(_velocity.x > 0.0f)
-		_velocity.x -= _friction.x;
+	{
+		_velocity.x = _velocity.x - _friction.x < 0.0f
+			? 0.0f : _velocity.x - _friction.x;
+	}
 	else if(_velocity.x < 0.0f)
-		_velocity.x += _friction.x;
+	{
+		_velocity.x = _velocity.x + _friction.x > 0.0f
+			? 0.0f : _velocity.x + _friction.x;
+	}
 
 	// Move Y towards 0.
 	if(_velocity.y > 0.0f)
-		_velocity.y -= _friction.y;
+	{
+		_velocity.y = _velocity.y - _friction.y < 0.0f
+			? 0.0f : _velocity.y - _friction.y;
+	}
 	else if(_velocity.y < 0.0f)
-		_velocity.y += _friction.y;
+	{
+		_velocity.y = _friction.y + _friction.y > 0.0f
+			? 0.0f : _velocity.y + _friction.y;
+	}
+
+	calculateAngle();
 }
 
 void Physics::calculateAngle()

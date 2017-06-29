@@ -22,6 +22,9 @@ private:
 	// Handle user interaction.
 	void handleInput();
 
+	// Handles the collions state.
+	void handleCollision();
+
 	// Changes the sprite if neccissary.
 	void updateSprite();
 
