@@ -143,6 +143,18 @@ void Game::handleInput()
 		case SDL_QUIT:
 			_quit = true;
 			break;
+		case SDL_KEYDOWN:
+			// TODO Handle these with Input class.
+			switch(e.key.keysym.sym)
+			{
+			case SDLK_F2:
+				// TODO Reset.
+				break;
+			case SDLK_F3:
+				pause();
+				break;
+			}
+			break;
 		}
 	}
 }
@@ -163,7 +175,8 @@ void Game::update()
 	{
 		if(_gameObjects[i])
 		{
-			_gameObjects[i]->update();
+			if(!_paused)
+				_gameObjects[i]->update();
 
 			// Delete the GameObject if neccissary.
 			if(_gameObjects[i]->getDeleteFlag())
@@ -197,6 +210,8 @@ void Game::render()
 		_renderList[i]->render();
 	_renderList.clear();
 
+	_currentLevel->render();
+
 	SDL_RenderPresent(_renderer);
 }
 
@@ -222,6 +237,12 @@ void Game::checkCollisions()
 			if(playerHitbox.y < (otherHitbox.y + otherHitbox.h) && (playerHitbox.y + playerHitbox.h) > otherHitbox.y)
 				_player->getBehaviour()->collide();
 	}
+}
+
+void Game::pause()
+{
+	_paused = !_paused;
+	_currentLevel->pause(_paused);
 }
 
 int Game::randomInRange(int min, int max)

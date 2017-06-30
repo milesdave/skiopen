@@ -49,6 +49,16 @@ void MainLevel::onLoad()
 	sign4->setBehaviour(new ObstacleBehaviour());
 
 	Game::instance()->windowDimentions(&_winWidth, &_winHeight);
+
+	// Setup the Text objects.
+	for(int i = 0; i < 4; i++)
+	{
+		_text[i].setFont(Data::instance()->sheet(SH_FONT));
+		_text[i].setPosition(Vector2 { 10, 12 * (i + 1) });
+	}
+	_pausedText.setFont(Data::instance()->sheet(SH_FONT));
+	_pausedText.setPosition(Vector2 { (_winWidth / 2) - 30, (_winHeight / 2) - 10 });
+
 	generateObstacles();
 }
 
@@ -60,17 +70,15 @@ void MainLevel::update()
 
 void MainLevel::render()
 {
-	// TODO
+	for(int i = 0; i < 4; i++)
+		_text[i].render();
+	_pausedText.render();
 }
 
-void MainLevel::pause()
+void MainLevel::pause(bool paused)
 {
-	// TODO
-}
-
-void MainLevel::onExit()
-{
-	// TODO
+	_scoreTimer.pause();
+	_pausedText.setText(paused ? "PAUSED!" : "");
 }
 
 void MainLevel::generateObstacles(int offset)

@@ -1,6 +1,8 @@
 #ifndef LEVELS_MAIN_LEVEL_H_
 #define LEVELS_MAIN_LEVEL_H_
 
+#include "../text.h"
+#include "../timer.h"
 #include "level.h"
 
 class GameObject;
@@ -16,8 +18,7 @@ public:
 	void onLoad() override;
 	void update() override;
 	void render() override;
-	void pause() override;
-	void onExit() override;
+	void pause(bool paused) override;
 
 private:
 	// Generates a 'tile' of obstacles centred on the player.
@@ -34,6 +35,15 @@ private:
 
 	// The player GameObject.
 	GameObject* _player = nullptr;
+
+	// Stats text objects in an array for convenience.
+	Text _text[4];
+
+	// The paused Text object.
+	Text _pausedText;
+
+	// The Timer object used for scoring.
+	Timer _scoreTimer;
 };
 
 #endif

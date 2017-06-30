@@ -10,16 +10,16 @@ public:
 	virtual void onLoad() = 0;
 
 	// Called to update the level.
-	virtual void update() = 0;
+	virtual void update() { }
 
 	// Called to render anything needed by the level.
-	virtual void render() = 0;
+	virtual void render() { }
 
 	// Called when the game is paused.
-	virtual void pause() = 0;
+	virtual void pause(bool paused) { }
 
 	// Called when the level has finished.
-	virtual void onExit() = 0;
+	virtual void onExit() { }
 };
 
 #define LEVELS 1

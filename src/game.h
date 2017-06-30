@@ -44,6 +44,9 @@ public:
 	// Returns a pointer to the camera object.
 	inline Camera* camera() { return &_camera; }
 
+	// Returns whether or not the game is paused.
+	inline bool isPaused() const { return _paused; }
+
 	// Returns a pointer to this singular Game instance.
 	static inline Game* instance() { return _instance; }
 
@@ -73,6 +76,9 @@ private:
 	// Checks if any GameObject has collided with another.
 	void checkCollisions();
 
+	// Pauses or unpauses the game.
+	void pause();
+
 	// Frame rate.
 	static constexpr unsigned int FPS = 60;
 
@@ -87,6 +93,9 @@ private:
 
 	// Whether or not the game should exit.
 	bool _quit = false;
+
+	// Whether or not the game is paused.
+	bool _paused = false;
 
 	// The singular Game instance.
 	static Game* _instance;
