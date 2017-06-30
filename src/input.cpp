@@ -49,19 +49,19 @@ bool Input::keyDown(Key key)
 	switch(key)
 	{
 	case Up:
-		if(keyboard[SDL_SCANCODE_UP])
+		if(keyboard[SDL_SCANCODE_UP] || keyboard[SDL_SCANCODE_W])
 			return true;
 		break;
 	case Down:
-		if(keyboard[SDL_SCANCODE_DOWN])
+		if(keyboard[SDL_SCANCODE_DOWN] || keyboard[SDL_SCANCODE_S])
 			return true;
 		break;
 	case Left:
-		if(keyboard[SDL_SCANCODE_LEFT])
+		if(keyboard[SDL_SCANCODE_LEFT] || keyboard[SDL_SCANCODE_A])
 			return true;
 		break;
 	case Right:
-		if(keyboard[SDL_SCANCODE_RIGHT])
+		if(keyboard[SDL_SCANCODE_RIGHT] || keyboard[SDL_SCANCODE_D])
 			return true;
 		break;
 	case Pause:

@@ -1,6 +1,10 @@
 #include <SDL.h>
 #include "timer.h"
 
+Timer::Timer() { }
+
+Timer::~Timer() { }
+
 void Timer::start()
 {
 	_startTime = SDL_GetTicks();

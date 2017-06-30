@@ -7,25 +7,33 @@ PlayerBehaviour::~PlayerBehaviour() { }
 
 void PlayerBehaviour::update()
 {
-	if(_state != Collision)
-		handleInput();
-	else
+	if(_state == Collision || _state == Stopped)
+	{
 		handleCollision();
-
-	updateSprite();
+	}
+	else
+	{
+		handleInput();
+		updateSprite();
+	}
 }
 
 void PlayerBehaviour::collide()
 {
 	// We're already in the collision state.
 	if(_state == Collision)
+	{
 		return;
+	}
 	// We're stuck in the same/another object.
 	else if(_state == Stopped)
-		_gameObject->physics()->addVelocity(Vector2F { 0.0f, 150.0f });
+	{
+		_gameObject->physics()->addVelocity(Vector2F { 0.0f, 200.0f });
+		_collisionTimer.stop();
+	}
 
 	_state = Collision;
-	_gameObject->physics()->setFriction(Vector2F { 10.0f, 10.0f });
+	_gameObject->physics()->setFriction(Vector2F { 5.0f, 5.0f });
 	_gameObject->renderer()->setSprite(
 		Data::instance()->sprite((int)_state));
 }
@@ -51,14 +59,26 @@ void PlayerBehaviour::handleCollision()
 	Vector2F velocity = _gameObject->physics()->getVelocity();
 
 	// Player has stopped moving.
-	if(velocity.x == 0.0f && velocity.y == 0.0f)
+	if(velocity == Vector2F::zero())
 	{
-		// TODO Start timer.
+		// Start the timer and set the state.
+		if(!_collisionTimer.isStarted())
+		{
+			_collisionTimer.start();
 
-		_state = Stopped;
-		_gameObject->physics()->setFriction(Vector2F { 1.0f, 0.5f });
-		_gameObject->renderer()->setSprite(
-			Data::instance()->sprite((int)_state));
+			_state = Stopped;
+			_gameObject->renderer()->setSprite(
+				Data::instance()->sprite((int)_state));
+		}
+		// Reset the player.
+		else if(_collisionTimer.isStarted()
+			&& _collisionTimer.getMilliseconds() > 500)
+		{
+			_collisionTimer.stop();
+
+			_state = Down;
+			_gameObject->physics()->setFriction(Vector2F { 1.0f, 0.5f });
+		}
 	}
 }
 
@@ -70,7 +90,7 @@ void PlayerBehaviour::updateSprite()
 	switch(_state)
 	{
 	case Down:
-		if(velocity.x == 0.0f && velocity.y == 0.0f)
+		if(velocity == Vector2F::zero())
 			return;
 		if(angle < 85.0f)
 			_state = Right1;

@@ -2,6 +2,7 @@
 #define BEHAVIOURS_PLAYER_H_
 
 #include "../data.h"
+#include "../timer.h"
 #include "../types.h"
 #include "behaviour.h"
 
@@ -47,6 +48,9 @@ private:
 
 	// Vector to modify the velocity with.
 	static constexpr Vector2F VELOCITY_MOD = { 4.0f, 2.5f };
+
+	// After collision wait timer.
+	Timer _collisionTimer;
 };
 
 #endif

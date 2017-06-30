@@ -30,9 +30,21 @@ struct Vector2F
 	Vector2F operator*(float a)
 	{
 		Vector2F v;
-		v.x = this->x * a;
-		v.y = this->y * a;
+		v.x = x * a;
+		v.y = y * a;
 		return v;
+	}
+
+	bool operator==(const Vector2F& v)
+	{
+		if(x == v.x && y == v.y)
+			return true;
+		return false;
+	}
+
+	static constexpr Vector2F zero()
+	{
+		return Vector2F { 0.0f, 0.0f };
 	}
 
 	float x;
