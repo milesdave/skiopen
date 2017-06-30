@@ -24,6 +24,9 @@ private:
 	// Generates a 'tile' of obstacles centred on the player.
 	void generateObstacles(int tileOffset = 250);
 
+	// Updates the player's score.
+	void updateScore();
+
 	// Geometry of the obstacle 'tile'.
 	Rect _obstacleTile;
 
@@ -44,6 +47,18 @@ private:
 
 	// The Timer object used for scoring.
 	Timer _scoreTimer;
+
+	// The current score for the player.
+	int _score = 0;
+
+	// The best score for the session.
+	int _bestScore = 0;
+
+	// The position of the player when scoring started (Y axis).
+	float _startPosition = 0.0f;
+
+	// The distance the player has travelled continuously (Y axis).
+	float _distance = 0.0f;
 };
 
 #endif

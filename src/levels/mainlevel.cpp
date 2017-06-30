@@ -66,6 +66,8 @@ void MainLevel::update()
 {
 	if(_player->physics()->getPosition().y > _obstacleTile.y)
 		generateObstacles(_winHeight);
+
+	updateScore();
 }
 
 void MainLevel::render()
@@ -131,4 +133,41 @@ void MainLevel::generateObstacles(int offset)
 			obstacle->setBehaviour(new ObstacleBehaviour());
 		}
 	}
+}
+
+void MainLevel::updateScore()
+{
+	Vector2F velocity = _player->physics()->getVelocity();
+
+	// Score timer has been started and player has stopped moving.
+	if(_scoreTimer.isStarted() && velocity == Vector2F::zero())
+	{
+		// Set the score and best score.
+		_score = (int)_distance - (_scoreTimer.getSeconds() * 100);
+		if(_score > _bestScore)
+			_bestScore = _score;
+
+		_scoreTimer.stop();
+		_distance = 0.0f;
+	}
+	// Score timer hasn't started and the player is moving down.
+	else if(!_scoreTimer.isStarted() && velocity.y > 0.0f)
+	{
+		// Start timer and track position.
+		_scoreTimer.start();
+		_startPosition = _player->physics()->getPosition().y;
+	}
+	// Score timer has been started.
+	else if(_scoreTimer.isStarted())
+	{
+		// Update the player's distance.
+		_distance = _player->physics()->getPosition().y - _startPosition;
+	}
+
+	// Update the statistics texts.
+	_text[0].setText("Time: " + std::to_string(_scoreTimer.getSeconds()));
+	_text[1].setText("Distance: " + std::to_string((int)_distance));
+	_text[2].setText("Last score: " + std::to_string(_score));
+	_text[3].setText("Best score: " + std::to_string(_bestScore)
+		+ (_bestScore > 25000 ? "{" : ""));
 }
