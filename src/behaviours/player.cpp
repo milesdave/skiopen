@@ -135,6 +135,8 @@ void PlayerBehaviour::updateSprite()
 		if(velocity.x != 0.0f || velocity.y != 0.0f)
 			_state = Down;
 		break;
+	case Collision:
+		break;
 	}
 
 	_gameObject->renderer()->setSprite(Data::instance()->sprite((int)_state));

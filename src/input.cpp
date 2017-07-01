@@ -36,7 +36,7 @@ bool Input::buttonDown(Key key)
 		(SDL_GameControllerButton)key) ? true : false;
 
 	// Directional key specified - try joystick as well.
-	if(key >= SDL_CONTROLLER_BUTTON_DPAD_UP && key <= SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
+	if((int)key >= (int)SDL_CONTROLLER_BUTTON_DPAD_UP && (int)key <= (int)SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
 		result |= joystick(JLeft, (Direction)key);
 
 	return result;

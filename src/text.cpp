@@ -37,11 +37,11 @@ void Text::render() const
 
 	int offset = _position.x;
 
-	for(int i = 0; i < _text.length(); i++)
+	for(unsigned int i = 0; i < _text.length(); i++)
 	{
 		char c = _text[i] - ASCII_OFFSET;
 
-		Rect source = _chars[c];
+		Rect source = _chars[(int)c];
 		Rect destination = { offset, _position.y, SIZE, SIZE };
 		SDL_RenderCopy(Game::instance()->renderer(), _font->texture,
 			&source, &destination);

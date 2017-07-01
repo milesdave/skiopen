@@ -1,7 +1,11 @@
 #include "../gameobject.h"
 #include "quadtree.h"
 
-Quadtree::Quadtree() { }
+Quadtree::Quadtree()
+{
+	for(int i = 0; i < 4; i++)
+		_node[i] = nullptr;
+}
 
 Quadtree::Quadtree(int level, Rect bounds)
 {
@@ -9,14 +13,16 @@ Quadtree::Quadtree(int level, Rect bounds)
 	_bounds = bounds;
 
 	for(int i = 0; i < 4; i++)
-		_nodes[i] = nullptr;
+		_node[i] = nullptr;
 }
 
 Quadtree::~Quadtree()
 {
 	for(int i = 0; i < 4; i++)
-		if(_nodes[i])
-			delete _nodes[i];
+	{
+		if(_node[i])
+			delete _node[i];
+	}
 }
 
 void Quadtree::clear()
@@ -25,25 +31,21 @@ void Quadtree::clear()
 
 	for(int i = 0; i < 4; i++)
 	{
-		if(_nodes[i])
-		{
-			_nodes[i]->clear();
-			delete _nodes[i];
-			_nodes[i] = nullptr;
-		}
+		if(_node[i])
+			_node[i]->clear();
 	}
 }
 
 void Quadtree::insert(GameObject* gameObject)
 {
-	if(_nodes[0])
+	if(_node[0])
 	{
 		int index = getIndex(gameObject->physics()->getHitbox());
 
 		// Recursively insert into subnode.
 		if(index != -1)
 		{
-			_nodes[index]->insert(gameObject);
+			_node[index]->insert(gameObject);
 			return;
 		}
 	}
@@ -55,7 +57,7 @@ void Quadtree::insert(GameObject* gameObject)
 	if(_gameObjects.size() > MAX_OBJECTS && _level < MAX_LEVELS)
 	{
 		// Node needs to be split.
-		if(!_nodes[0])
+		if(!_node[0])
 			split();
 
 		int i = 0;
@@ -66,7 +68,7 @@ void Quadtree::insert(GameObject* gameObject)
 			if(index != -1)
 			{
 				// Move GameObject to it's new node.
-				_nodes[i]->insert(_gameObjects[i]);
+				_node[i]->insert(_gameObjects[i]);
 				_gameObjects.remove(i);
 			}
 			else
@@ -82,8 +84,8 @@ GOList* Quadtree::retrieve(GOList* gameObjects, GameObject* subject)
 	int index = getIndex(subject->physics()->getHitbox());
 
 	// Recursively find the correct node.
-	if(index != -1 && _nodes[0])
-		_nodes[index]->retrieve(gameObjects, subject);
+	if(index != -1 && _node[0])
+		_node[index]->retrieve(gameObjects, subject);
 	else // Return all GameObjects from node.
 		for(int i = 0; i < _gameObjects.size(); i++)
 			gameObjects->add(_gameObjects[i]);
@@ -93,18 +95,15 @@ GOList* Quadtree::retrieve(GOList* gameObjects, GameObject* subject)
 
 void Quadtree::split()
 {
-	int subWidth = _bounds.w / 2;
-	int subHeight = _bounds.h / 2;
+	int w = _bounds.w / 2;
+	int h = _bounds.h / 2;
 	int x = _bounds.x;
 	int y = _bounds.y;
 
-	_nodes[0] = new Quadtree(_level + 1, Rect { x + subWidth, y, subWidth,
-		subHeight });
-	_nodes[1] = new Quadtree(_level + 1, Rect { x, y, subWidth, subHeight });
-	_nodes[2] = new Quadtree(_level + 1, Rect { x, y + subHeight, subWidth,
-		subHeight });
-	_nodes[3] = new Quadtree(_level + 1, Rect { x + subWidth, y + subHeight,
-		subWidth, subHeight });
+	_node[0] = new Quadtree(_level + 1, Rect { x + w, y, w, h });
+	_node[1] = new Quadtree(_level + 1, Rect { x, y, w, h });
+	_node[2] = new Quadtree(_level + 1, Rect { x, y + h, w, h });
+	_node[3] = new Quadtree(_level + 1, Rect { x + w, y + h, w, h });
 }
 
 int Quadtree::getIndex(Hitbox hitbox)

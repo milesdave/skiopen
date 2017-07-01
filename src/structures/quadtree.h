@@ -47,10 +47,10 @@ private:
 	int _level = 0;
 
 	// Area of the node.
-	Rect _bounds;
+	Rect _bounds = { 0, 0, 0, 0 };
 
 	// Subnodes of this node.
-	Quadtree* _nodes[4];
+	Quadtree* _node[4];
 
 	// GameObjects in this node.
 	GOList _gameObjects;
