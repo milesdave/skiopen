@@ -7,6 +7,9 @@ Quadtree::Quadtree(int level, Rect bounds)
 {
 	_level = level;
 	_bounds = bounds;
+
+	for(int i = 0; i < 4; i++)
+		_nodes[i] = nullptr;
 }
 
 Quadtree::~Quadtree()
@@ -133,5 +136,5 @@ int Quadtree::getIndex(Hitbox hitbox)
 			index = 3; // Bottom right quadrant.
 	}
 
-	return 0;
+	return index;
 }
