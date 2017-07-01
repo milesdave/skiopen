@@ -27,13 +27,13 @@ public:
 	inline Physics* physics() { return &_physics; }
 
 	// Returns a pointer to the behaviour component.
-	inline Behaviour* getBehaviour() const { return _behaviour; }
+	inline Behaviour* behaviour() const { return _behaviour; }
 
 	// Sets the behaviour component.
 	void setBehaviour(Behaviour* behaviour);
 
 	// Gets the delete flag status.
-	inline bool getDeleteFlag() const { return _delete; }
+	inline bool deleteFlag() const { return _delete; }
 
 	// Sets the delete flag status.
 	inline void setDeleteFlag(bool flag) { _delete = flag; }

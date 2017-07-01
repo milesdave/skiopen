@@ -21,7 +21,7 @@ void GameObject::update()
 
 void GameObject::render()
 {
-	_renderer.render(_physics.getPosition());
+	_renderer.render(_physics.position());
 }
 
 void GameObject::setBehaviour(Behaviour* behaviour)
@@ -46,7 +46,7 @@ Rect GameObject::spritePosition() const
 		sprite.h = dimentions.h;
 	}
 
-	sprite = Game::centre(sprite, _physics.getPosition());
+	sprite = Game::centre(sprite, _physics.position());
 
 	return sprite;
 }

@@ -14,13 +14,13 @@ public:
 	void update();
 
 	// Returns the position of the GameObject.
-	inline Vector2F getPosition() const { return _position; }
+	inline Vector2F position() const { return _position; }
 
 	// Sets the GameObject position.
 	inline void setPosition(Vector2F position) { _position = position; }
 
 	// Returns the velocity of the GameObject.
-	inline Vector2F getVelocity() const { return _velocity; }
+	inline Vector2F velocity() const { return _velocity; }
 
 	// Sets the GameObject velocity.
 	inline void setVelocity(Vector2F velocity) { _velocity = velocity; calculateAngle(); }
@@ -38,13 +38,13 @@ public:
 	inline void setFriction(Vector2F friction) { _friction = friction; }
 
 	// Returns the angle of the GameObject.
-	inline float getAngle() const { return _angle; }
+	inline float angle() const { return _angle; }
 
 	// Sets the angle of the GameObject.
 	inline void setAngle(float angle) { _angle = angle; }
 
 	// Returns the Hitbox for the GameObject.
-	Hitbox getHitbox();
+	Hitbox hitbox();
 
 	// Sets the Hitbox for the GameObject.
 	inline void setHitbox(Hitbox hitbox) { _hitbox = hitbox; }

@@ -67,7 +67,7 @@ void Physics::calculateAngle()
 	_angle = (float)RAD2DEG(atan2(_velocity.y, _velocity.x));
 }
 
-Hitbox Physics::getHitbox()
+Hitbox Physics::hitbox()
 {
 	return Game::centre(_hitbox, _position);
 }

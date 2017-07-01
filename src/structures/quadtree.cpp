@@ -40,7 +40,7 @@ void Quadtree::insert(GameObject* gameObject)
 {
 	if(_node[0])
 	{
-		int index = getIndex(gameObject->physics()->getHitbox());
+		int index = getIndex(gameObject->physics()->hitbox());
 
 		// Recursively insert into subnode.
 		if(index != -1)
@@ -63,7 +63,7 @@ void Quadtree::insert(GameObject* gameObject)
 		int i = 0;
 		while(i < _gameObjects.size())
 		{
-			int index = getIndex(_gameObjects[i]->physics()->getHitbox());
+			int index = getIndex(_gameObjects[i]->physics()->hitbox());
 
 			if(index != -1)
 			{
@@ -81,7 +81,7 @@ void Quadtree::insert(GameObject* gameObject)
 
 GOList* Quadtree::retrieve(GOList* gameObjects, GameObject* subject)
 {
-	int index = getIndex(subject->physics()->getHitbox());
+	int index = getIndex(subject->physics()->hitbox());
 
 	// Recursively find the correct node.
 	if(index != -1 && _node[0])

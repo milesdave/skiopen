@@ -56,7 +56,7 @@ void PlayerBehaviour::handleInput()
 
 void PlayerBehaviour::handleCollision()
 {
-	Vector2F velocity = _gameObject->physics()->getVelocity();
+	Vector2F velocity = _gameObject->physics()->velocity();
 
 	// Player has stopped moving.
 	if(velocity == Vector2F::zero())
@@ -84,8 +84,8 @@ void PlayerBehaviour::handleCollision()
 
 void PlayerBehaviour::updateSprite()
 {
-	float angle = _gameObject->physics()->getAngle();
-	Vector2F velocity = _gameObject->physics()->getVelocity();
+	float angle = _gameObject->physics()->angle();
+	Vector2F velocity = _gameObject->physics()->velocity();
 
 	switch(_state)
 	{

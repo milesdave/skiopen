@@ -177,7 +177,7 @@ void Game::update()
 	if(_player)
 	{
 		Rect bounds = { 0, 0, _winWidth, _winHeight };
-		bounds = Game::centre(bounds, _player->physics()->getPosition());
+		bounds = Game::centre(bounds, _player->physics()->position());
 		_quadtree->setBounds(bounds);
 	}
 
@@ -189,7 +189,7 @@ void Game::update()
 				_gameObjects[i]->update();
 
 			// Delete the GameObject if neccissary.
-			if(_gameObjects[i]->getDeleteFlag())
+			if(_gameObjects[i]->deleteFlag())
 			{
 				_gameObjects.remove(i);
 				continue;
@@ -232,19 +232,19 @@ void Game::checkCollisions()
 	List<GameObject*> possibleCollisions;
 	_quadtree->retrieve(&possibleCollisions, _player);
 
-	Hitbox playerHitbox = _player->physics()->getHitbox();
+	Hitbox playerHitbox = _player->physics()->hitbox();
 
 	for(int i = 0; i < possibleCollisions.size(); i++)
 	{
 		if(possibleCollisions[i] == _player)
 			continue;
 
-		Hitbox otherHitbox = possibleCollisions[i]->physics()->getHitbox();
+		Hitbox otherHitbox = possibleCollisions[i]->physics()->hitbox();
 
 		// Check for Hitbox overlap.
 		if(playerHitbox.x < (otherHitbox.x + otherHitbox.w) && (playerHitbox.x + playerHitbox.w) > otherHitbox.x)
 			if(playerHitbox.y < (otherHitbox.y + otherHitbox.h) && (playerHitbox.y + playerHitbox.h) > otherHitbox.y)
-				_player->getBehaviour()->collide();
+				_player->behaviour()->collide();
 	}
 }
 

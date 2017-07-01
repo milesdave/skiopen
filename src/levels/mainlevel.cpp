@@ -64,7 +64,7 @@ void MainLevel::onLoad()
 
 void MainLevel::update()
 {
-	if(_player->physics()->getPosition().y > _obstacleTile.y)
+	if(_player->physics()->position().y > _obstacleTile.y)
 		generateObstacles(_winHeight);
 
 	updateScore();
@@ -142,7 +142,7 @@ void MainLevel::generateObstacles(int offset)
 
 void MainLevel::updateScore()
 {
-	Vector2F velocity = _player->physics()->getVelocity();
+	Vector2F velocity = _player->physics()->velocity();
 
 	// Score timer has been started and player has stopped moving.
 	if(_scoreTimer.isStarted() && velocity == Vector2F::zero())
@@ -160,13 +160,13 @@ void MainLevel::updateScore()
 	{
 		// Start timer and track position.
 		_scoreTimer.start();
-		_startPosition = _player->physics()->getPosition().y;
+		_startPosition = _player->physics()->position().y;
 	}
 	// Score timer has been started.
 	else if(_scoreTimer.isStarted())
 	{
 		// Update the player's distance.
-		_distance = _player->physics()->getPosition().y - _startPosition;
+		_distance = _player->physics()->position().y - _startPosition;
 	}
 
 	// Update the statistics texts.
