@@ -5,54 +5,63 @@ template <typename T>
 class Array
 {
 public:
-	// initialises with max number of elements
-	Array(int capacity = 128);
+	Array();
 
 	~Array();
 
-	// returns a pointer to a free 'T'
-	T* allocate();
+	// Creates the array with the specified size.
+	void init(int size);
 
-	// access an element in the array
+	// Returns a pointer to the next free object index, nullptr on fail.
+	T* nextFree();
+
+	// Returns a pointer to the object at the specified index, nullptr if there
+	// is none.
 	T* operator[](int index);
 
-	// remove an element from the array (mark for reuse)
+	// Removes (destructs) the object at the specified index and marks the index
+	// as free.
 	void remove(int index);
 
-	// returns the number of (active) elements in the array
-	inline int elements() const { return m_elements; }
+	// Removes (destructs) all objects in the array.
+	void clear();
 
-	// returns the capacity of the array
-	inline int capacity() const { return m_capacity; }
+	// Returns the size of the array.
+	inline int size() const { return _size; };
+
+	// Returns the number of used indicies in the array.
+	inline int used() const { return _used; }
+
+	// Returns the number of free indicies in the array.
+	inline int available() const { return _size - _used; }
 
 private:
-	// pop a free index from the free stack
-	int pop();
+	// Pops a free index from the free index stack.
+	int freePop();
 
-	// push a free index to the free stack
-	void push(int free);
+	// Pushes a free index to the free index stack.
+	void freePush(int index);
 
-	// element structure stored in array
-	struct Element
-	{
-		bool isActive = false;
-		T object;
-	};
+	// Returns true if the free stack contains the specified index.
+	bool freeContains(int index);
 
-	// number of (active) elements in the array
-	int m_elements = 0;
+	// The size of the array.
+	int _size = 0;
 
-	// max number of elements the array can hold
-	int m_capacity = 0;
+	// The number of used indicies in the array.
+	int _used = 0;
 
-	// index for free stack
-	int m_index = 0;
+	// Index for the stack of free indicies.
+	int _freeIndex = 0;
 
-	// stack of free indicies
-	int *m_freeStack = nullptr;
+	// Stack of free indicies.
+	int* _freeStack = nullptr;
 
-	// abstracted object array
-	Element *m_objects = nullptr;
+	// The array of objects.
+	T* _array = nullptr;
+
+	// The raw memory block used for the object array.
+	char* _raw = nullptr;
 };
 
 #include "array.tcc"

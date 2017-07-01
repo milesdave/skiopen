@@ -56,6 +56,7 @@ void Game::init()
 
 	Data::instance()->load();
 	Input::initController();
+	_gameObjects.init(128);
 	_camera.setGeometry(Rect { 0, 0, _winWidth, _winHeight });
 
 	_quadtree = new Quadtree(0, Rect { 0, 0, _winWidth, _winHeight });
@@ -109,12 +110,10 @@ void Game::windowDimentions(int* width, int* height) const
 
 GameObject* Game::createGameObject()
 {
-	GameObject* x = _gameObjects.allocate();
-
-	if(!x)
+	GameObject* x;
+	if(!(x = _gameObjects.nextFree()))
 		panic("createGameObject()", "Could not create a new GameObject!");
 
-	*x = GameObject();
 	return x;
 }
 
@@ -171,7 +170,7 @@ void Game::update()
 		_quadtree->setBounds(bounds);
 	}
 
-	for(int i = 0; i < _gameObjects.capacity(); i++)
+	for(int i = 0; i < _gameObjects.size(); i++)
 	{
 		if(_gameObjects[i])
 		{
@@ -181,7 +180,6 @@ void Game::update()
 			// Delete the GameObject if neccissary.
 			if(_gameObjects[i]->getDeleteFlag())
 			{
-				_gameObjects[i]->setBehaviour(nullptr);
 				_gameObjects.remove(i);
 				continue;
 			}

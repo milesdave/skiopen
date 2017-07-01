@@ -1,84 +1,107 @@
 #ifndef STRUCTURES_ARRAY_TCC_
 #define STRUCTURES_ARRAY_TCC_
 
-template <typename T>
-Array<T>::Array(int capacity)
-{
-	m_capacity = capacity;
-	m_objects = new Element[m_capacity];
-	m_freeStack = new int[m_capacity];
+#include <cstdlib>
+#include <new>
 
-	// setup free stack
-	for(int i = 0; i < m_capacity; i++)
-		m_freeStack[i] = i;
-}
+template <typename T>
+Array<T>::Array() { }
 
 template <typename T>
 Array<T>::~Array()
 {
-	delete[] m_objects;
-	delete[] m_freeStack;
+	clear();
+	free(_raw);
+	delete[] _freeStack;
 }
 
 template <typename T>
-T* Array<T>::allocate()
+void Array<T>::init(int size)
+{
+	_size = size;
+
+	// Create the _array.
+	_raw = (char*)calloc(sizeof(T), _size);
+	_array = (T*)_raw;
+
+	// Initialise the free stack.
+	_freeStack = new int[_size];
+	for(int i = 0; i < _size; i++)
+		_freeStack[i] = i;
+}
+
+template <typename T>
+T* Array<T>::nextFree()
 {
 	int index;
-	if((index = pop()) == -1)
+	if((index = freePop()) == -1)
 		return nullptr;
 
-	// set active flag at position
-	m_objects[index].isActive = true;
+	_used++;
 
-	m_elements++;
-	return &m_objects[index].object;
+	T* object = new(&_array[index]) T();
+	return object;
 }
 
 template <typename T>
 T* Array<T>::operator[](int index)
 {
-	if(index < 0 || index >= m_capacity)
+	if(freeContains(index))
 		return nullptr;
-
-	return m_objects[index].isActive ? &m_objects[index].object : nullptr;
+	else
+		return &_array[index];
 }
 
 template <typename T>
 void Array<T>::remove(int index)
 {
-	if(index < 0 || index >= m_capacity)
-		return;
-
-	push(index);
-
-	m_objects[index].isActive = false;
-	m_elements--;
+	_array[index].~T();
+	_used--;
+	freePush(index);
 }
 
 template <typename T>
-int Array<T>::pop()
+void Array<T>::clear()
 {
-	// array full
-	if(m_index == m_capacity)
+	for(int i = 0; i < _size; i++)
+	{
+		if(freeContains(i))
+			continue;
+		else
+			_array[i].~T();
+	}
+}
+
+template <typename T>
+int Array<T>::freePop()
+{
+	if(_freeIndex == _size)
 		return -1;
 
-	int free = m_freeStack[m_index];
+	int index = _freeStack[_freeIndex];
+	_freeStack[_freeIndex] = -1;
+	_freeIndex++;
 
-	// remove free spot
-	m_freeStack[m_index] = -1;
-
-	// increment index
-	if(m_index < m_capacity)
-		m_index++;
-
-	return free;
+	return index;
 }
 
 template <typename T>
-void Array<T>::push(int free)
+void Array<T>::freePush(int index)
 {
-	m_index--;
-	m_freeStack[m_index] = free;
+	_freeIndex--;
+	_freeStack[_freeIndex] = index;
+}
+
+template <typename T>
+bool Array<T>::freeContains(int index)
+{
+	for(int i = _freeIndex; i < _size; i++)
+	{
+		if(_freeStack[i] == index)
+			return true;
+	}
+
+	return false;
 }
 
 #endif
