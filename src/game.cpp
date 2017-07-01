@@ -14,6 +14,9 @@ Game::Game()
 
 Game::~Game()
 {
+	if(_currentLevel)
+		_currentLevel->onExit();
+
 	Input::closeController();
 	delete Data::instance();
 
@@ -147,7 +150,7 @@ void Game::handleInput()
 			switch(e.key.keysym.sym)
 			{
 			case SDLK_F2:
-				// TODO Reset.
+				restart();
 				break;
 			case SDLK_F3:
 				pause();
@@ -241,6 +244,15 @@ void Game::pause()
 {
 	_paused = !_paused;
 	_currentLevel->pause(_paused);
+}
+
+void Game::restart()
+{
+	if(!_currentLevel)
+		return;
+
+	_currentLevel->onExit();
+	_currentLevel->onLoad();
 }
 
 int Game::randomInRange(int min, int max)

@@ -57,7 +57,7 @@ void MainLevel::onLoad()
 		_text[i].setPosition(Vector2 { 10, 12 * (i + 1) });
 	}
 	_pausedText.setFont(Data::instance()->sheet(SH_FONT));
-	_pausedText.setPosition(Vector2 { (_winWidth / 2) - 30, (_winHeight / 2) - 10 });
+	_pausedText.setPosition(Vector2 { (_winWidth / 2) - 30, (_winHeight / 2) - 30 });
 
 	generateObstacles();
 }
@@ -81,6 +81,11 @@ void MainLevel::pause(bool paused)
 {
 	_scoreTimer.pause();
 	_pausedText.setText(paused ? "PAUSED!" : "");
+}
+
+void MainLevel::onExit()
+{
+	Game::instance()->clearGameObjects();
 }
 
 void MainLevel::generateObstacles(int offset)

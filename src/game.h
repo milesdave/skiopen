@@ -53,6 +53,9 @@ public:
 	// Sets the player GameObject.
 	inline void setPlayer(GameObject* player) { _player = player; }
 
+	// Clears the GameObject array.
+	inline void clearGameObjects() { _gameObjects.clear(); }
+
 	// Returns a random integer in a range.
 	static int randomInRange(int min, int max);
 
@@ -78,6 +81,9 @@ private:
 
 	// Pauses or unpauses the game.
 	void pause();
+
+	// Restarts the current level.
+	void restart();
 
 	// Frame rate.
 	static constexpr unsigned int FPS = 60;

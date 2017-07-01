@@ -19,6 +19,7 @@ public:
 	void update() override;
 	void render() override;
 	void pause(bool paused) override;
+	void onExit() override;
 
 private:
 	// Generates a 'tile' of obstacles centred on the player.

@@ -68,7 +68,7 @@ void Array<T>::clear()
 		if(freeContains(i))
 			continue;
 		else
-			_array[i].~T();
+			remove(i);
 	}
 }
 
