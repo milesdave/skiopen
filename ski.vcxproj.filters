@@ -9,6 +9,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Resourcea Files">
+      <UniqueIdentifier>{507b1da6-5652-4826-adb2-792587749956}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -121,6 +124,9 @@
     <ClInclude Include="src\text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="res\resource.h">
+      <Filter>Resourcea Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\structures\array.tcc">
@@ -129,5 +135,15 @@
     <None Include="src\structures\list.tcc">
       <Filter>Source Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\icon.ico">
+      <Filter>Resourcea Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\resource.rc">
+      <Filter>Resourcea Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

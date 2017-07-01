@@ -85,6 +85,9 @@ private:
 	// Restarts the current level.
 	void restart();
 
+	// Sets the window icon to the .exe icon.
+	void setWindowIcon();
+
 	// Frame rate.
 	static constexpr unsigned int FPS = 60;
 

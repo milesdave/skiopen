@@ -6,6 +6,12 @@
 #include "input.h"
 #include "levels/mainlevel.h"
 
+#if _WIN32
+#include <SDL_syswm.h>
+#include <windows.h>
+#include "../res/resource.h"
+#endif
+
 Game::Game()
 {
 	if(!_instance)
@@ -47,6 +53,8 @@ void Game::init()
 		SDL_WINDOWPOS_CENTERED, _winWidth, _winHeight, SDL_WINDOW_SHOWN);
 	if(!_window)
 		panic("SDL_CreateWindow()", SDL_GetError());
+
+	setWindowIcon();
 
 	_renderer = SDL_CreateRenderer(_window, -1,
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -269,6 +277,23 @@ Rect Game::centre(Rect original, Vector2 point)
 Rect Game::centre(Rect original, Vector2F point)
 {
 	return Game::centre(original, Vector2 { (int)point.x, (int)point.y });
+}
+
+void Game::setWindowIcon()
+{
+#if _WIN32
+	HICON icon = LoadIcon(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDI_ICON1));
+	if(!icon)
+		return;
+
+	SDL_SysWMinfo wmInfo;
+	SDL_VERSION(&wmInfo.version);
+	SDL_GetWindowWMInfo(_window, &wmInfo);
+
+	HWND window = wmInfo.info.win.window;
+	SendMessage(window, WM_SETICON, ICON_BIG, (LPARAM)icon);
+	DestroyIcon(icon);
+#endif
 }
 
 Game* Game::_instance = nullptr;
