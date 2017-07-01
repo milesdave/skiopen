@@ -3,8 +3,12 @@ lib/
 obj/
 .vs/
 
+.depend
+skiopen
+
 *.aps
 *.db
+*.o
 *.opendb
 *.swp
 *.user
