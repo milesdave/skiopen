@@ -14,7 +14,7 @@ void Physics::update()
 	applyFriction();
 }
 
-void Physics::addVelocity(Vector2F velocity)
+void Physics::addVelocity(Vector2f velocity)
 {
 	_velocity += velocity;
 

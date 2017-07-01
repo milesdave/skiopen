@@ -61,7 +61,7 @@ public:
 
 	// Returns a rectangle centred on a point.
 	static Rect centre(Rect original, Vector2 point);
-	static Rect centre(Rect original, Vector2F point);
+	static Rect centre(Rect original, Vector2f point);
 
 private:
 	// Gameplay setup before loop().

@@ -28,19 +28,19 @@ void PlayerBehaviour::collide()
 	// We're stuck in the same/another object.
 	else if(_state == Stopped)
 	{
-		_gameObject->physics()->addVelocity(Vector2F { 0.0f, 200.0f });
+		_gameObject->physics()->addVelocity(Vector2f { 0.0f, 200.0f });
 		_collisionTimer.stop();
 	}
 
 	_state = Collision;
-	_gameObject->physics()->setFriction(Vector2F { 5.0f, 5.0f });
+	_gameObject->physics()->setFriction(Vector2f { 5.0f, 5.0f });
 	_gameObject->renderer()->setSprite(
 		Data::instance()->sprite((int)_state));
 }
 
 void PlayerBehaviour::handleInput()
 {
-	Vector2F add = { 0.0f, 0.0f };
+	Vector2f add = { 0.0f, 0.0f };
 
 	if(Input::input(Key::Up))
 		add.y -= VELOCITY_MOD.y;
@@ -56,13 +56,13 @@ void PlayerBehaviour::handleInput()
 
 void PlayerBehaviour::handleCollision()
 {
-	Vector2F velocity = _gameObject->physics()->velocity();
+	Vector2f velocity = _gameObject->physics()->velocity();
 
 	// Player has stopped moving.
-	if(velocity == Vector2F::zero())
+	if(velocity == Vector2f::zero())
 	{
 		// Start the timer and set the state.
-		if(!_collisionTimer.isStarted())
+		if(!_collisionTimer.started())
 		{
 			_collisionTimer.start();
 
@@ -71,13 +71,13 @@ void PlayerBehaviour::handleCollision()
 				Data::instance()->sprite((int)_state));
 		}
 		// Reset the player.
-		else if(_collisionTimer.isStarted()
-			&& _collisionTimer.getMilliseconds() > 500)
+		else if(_collisionTimer.started()
+			&& _collisionTimer.milliseconds() > 500)
 		{
 			_collisionTimer.stop();
 
 			_state = Down;
-			_gameObject->physics()->setFriction(Vector2F { 1.0f, 0.5f });
+			_gameObject->physics()->setFriction(Vector2f { 1.0f, 0.5f });
 		}
 	}
 }
@@ -85,12 +85,12 @@ void PlayerBehaviour::handleCollision()
 void PlayerBehaviour::updateSprite()
 {
 	float angle = _gameObject->physics()->angle();
-	Vector2F velocity = _gameObject->physics()->velocity();
+	Vector2f velocity = _gameObject->physics()->velocity();
 
 	switch(_state)
 	{
 	case Down:
-		if(velocity == Vector2F::zero())
+		if(velocity == Vector2f::zero())
 			return;
 		if(angle < 85.0f)
 			_state = Right1;

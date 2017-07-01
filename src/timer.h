@@ -18,16 +18,16 @@ public:
 	void pause();
 
 	// Returns the milliseconds since the timer started.
-	int getMilliseconds() const;
+	int milliseconds() const;
 
 	// Returns the seconds since the timer started.
-	inline int getSeconds() const { return getMilliseconds() / 1000; }
+	inline int seconds() const { return milliseconds() / 1000; }
 
 	// Returns whether or not the timer has been started.
-	inline bool isStarted() const { return _isStarted; }
+	inline bool started() const { return _isStarted; }
 
 	// Returns whether or not the timer has been paused.
-	inline bool isPaused() const { return _isPaused; }
+	inline bool paused() const { return _isPaused; }
 
 private:
 	// The time when the timer was started.

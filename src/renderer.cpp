@@ -22,7 +22,7 @@ void Renderer::setSprite(Sprite *sprite)
 	_complete = _sprite->frames == 1 ? true : false;
 }
 
-void Renderer::render(Vector2F position)
+void Renderer::render(Vector2f position)
 {
 	if(!_sprite)
 		return;

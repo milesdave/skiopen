@@ -39,9 +39,9 @@ Rect GameObject::spritePosition() const
 {
 	Rect sprite = { 0, 0, 0, 0 };
 
-	if(_renderer.getSprite())
+	if(_renderer.sprite())
 	{
-		Rect dimentions = _renderer.getSprite()->clips[0];
+		Rect dimentions = _renderer.sprite()->clips[0];
 		sprite.w = dimentions.w;
 		sprite.h = dimentions.h;
 	}

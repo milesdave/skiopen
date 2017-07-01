@@ -41,7 +41,7 @@ void Timer::pause()
 	}
 }
 
-int Timer::getMilliseconds() const
+int Timer::milliseconds() const
 {
 	int time = 0;
 

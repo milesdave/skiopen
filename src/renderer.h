@@ -13,10 +13,10 @@ public:
 	~Renderer();
 
 	// Renders the sprite.
-	void render(Vector2F position);
+	void render(Vector2f position);
 
 	// Returns a pointer to the sprite.
-	inline Sprite* getSprite() const { return _sprite; }
+	inline Sprite* sprite() const { return _sprite; }
 
 	// Sets the current sprite.
 	void setSprite(Sprite* sprite);

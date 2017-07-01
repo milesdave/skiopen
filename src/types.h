@@ -10,14 +10,14 @@ struct Vector2
 	int y;
 };
 
-struct Vector2F
+struct Vector2f
 {
-	void operator+=(const Vector2F& v)
+	void operator+=(const Vector2f& v)
 	{
 		x += v.x; y += v.y;
 	}
 
-	void operator-=(const Vector2F& v)
+	void operator-=(const Vector2f& v)
 	{
 		x -= v.x; y -= v.y;
 	}
@@ -27,24 +27,24 @@ struct Vector2F
 		x *= a; y *= a;
 	}
 
-	Vector2F operator*(float a)
+	Vector2f operator*(float a)
 	{
-		Vector2F v;
+		Vector2f v;
 		v.x = x * a;
 		v.y = y * a;
 		return v;
 	}
 
-	bool operator==(const Vector2F& v)
+	bool operator==(const Vector2f& v)
 	{
 		if(x == v.x && y == v.y)
 			return true;
 		return false;
 	}
 
-	static constexpr Vector2F zero()
+	static constexpr Vector2f zero()
 	{
-		return Vector2F { 0.0f, 0.0f };
+		return Vector2f { 0.0f, 0.0f };
 	}
 
 	float x;

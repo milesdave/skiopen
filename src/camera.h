@@ -19,7 +19,7 @@ public:
 	void setFocus(GameObject *focus);
 
 	// Returns the camera geometry.
-	inline Rect getGeometry() const { return _geometry; }
+	inline Rect geometry() const { return _geometry; }
 
 	// Sets the camera geometry.
 	void setGeometry(Rect geometry);
