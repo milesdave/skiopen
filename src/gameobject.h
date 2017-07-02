@@ -9,6 +9,8 @@ class Behaviour;
 
 class GameObject
 {
+	friend class Game;
+
 public:
 	GameObject();
 
@@ -38,12 +40,30 @@ public:
 	// Sets the delete flag status.
 	inline void setDeleteFlag(bool flag) { _delete = flag; }
 
+	// Returns the name of the GameObject.
+	inline const char* name() const { return _name; }
+
+	// Sets the name of the GameObject.
+	inline void setName(const char* name) { _name = name; }
+
+	// Returns the index of the GameObject in it's storage structure.
+	inline int index() const { return _index; }
+
 	// Returns the GameObject sprite geometry.
 	Rect spritePosition() const;
 
 private:
 	// State of whether or not the GameObject should be deleted.
 	bool _delete = false;
+
+	// Whether or not this GameObject
+	bool _skipUpdate = false;
+
+	// The name of the GameObject.
+	const char* _name = nullptr;
+
+	// The index of the GameObject in it's storage structure.
+	int _index = -1;
 
 	// The renderer component object.
 	Renderer _renderer;

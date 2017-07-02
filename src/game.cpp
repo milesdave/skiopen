@@ -121,11 +121,19 @@ void Game::windowDimentions(int* width, int* height) const
 
 GameObject* Game::createGameObject()
 {
-	GameObject* x;
-	if(!(x = _gameObjects.nextFree()))
+	int index = -1;
+	GameObject* gObject = _gameObjects.nextFree(&index);
+
+	if(!gObject)
 		panic("createGameObject()", "Could not create a new GameObject!");
 
-	return x;
+	gObject->_index = index;
+	return gObject;
+}
+
+void Game::removeGameObject(GameObject* gameObject)
+{
+	_gameObjects.remove(gameObject->_index);
 }
 
 void Game::setLevel(int index)
@@ -183,30 +191,31 @@ void Game::update()
 
 	for(int i = 0; i < _gameObjects.size(); i++)
 	{
-		if(_gameObjects[i])
+		GameObject* gObject = _gameObjects[i];
+		if(gObject)
 		{
-			if(!_paused)
-				_gameObjects[i]->update();
+			// Update the GameObject if possible.
+			if(!_paused && !gObject->_skipUpdate)
+				gObject->update();
 
 			// Delete the GameObject if neccissary.
-			if(_gameObjects[i]->deleteFlag())
+			if(gObject->_delete)
 			{
 				_gameObjects.remove(i);
 				continue;
 			}
 
-			_quadtree->insert(_gameObjects[i]);
+			_quadtree->insert(gObject);
 
 			// Add the GameObject to the render list if neccissary.
-			if(_camera.onScreen(_gameObjects[i]->spritePosition()))
-				_renderList.add(_gameObjects[i]);
+			if(_camera.onScreen(gObject->spritePosition()))
+				_renderList.add(gObject);
 		}
 	}
 
 	checkCollisions();
 
 	_camera.update();
-
 	if(_currentLevel)
 		_currentLevel->update();
 }

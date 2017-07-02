@@ -13,7 +13,8 @@ public:
 	void init(int size);
 
 	// Returns a pointer to the next free object index, nullptr on fail.
-	T* nextFree();
+	// Provide an int pointer in order to receive the index the object is from.
+	T* nextFree(int* index = nullptr);
 
 	// Returns a pointer to the object at the specified index, nullptr if there
 	// is none.

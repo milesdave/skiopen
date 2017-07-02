@@ -31,11 +31,14 @@ void Array<T>::init(int size)
 }
 
 template <typename T>
-T* Array<T>::nextFree()
+T* Array<T>::nextFree(int* i)
 {
 	int index;
 	if((index = freePop()) == -1)
 		return nullptr;
+
+	if(i)
+		*i = index;
 
 	_used++;
 

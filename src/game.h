@@ -32,6 +32,9 @@ public:
 	// Returns a pointer to a new GameObject to use.
 	GameObject* createGameObject();
 
+	// Removes a GameObject from use.
+	void removeGameObject(GameObject* gameObject);
+
 	// Sets the current level.
 	void setLevel(int index);
 
