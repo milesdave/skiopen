@@ -28,12 +28,12 @@ void PlayerBehaviour::collide()
 	// We're stuck in the same/another object.
 	else if(_state == Stopped)
 	{
-		_gameObject->physics()->addVelocity(Vector2f { 0.0f, 200.0f });
+		_gameObject->physics()->addVelocity(Vector2f{0.0f, 200.0f});
 		_collisionTimer.stop();
 	}
 
 	_state = Collision;
-	_gameObject->physics()->setFriction(Vector2f { 5.0f, 5.0f });
+	_gameObject->physics()->setFriction(Vector2f{5.0f, 5.0f});
 	_gameObject->renderer()->setSprite(
 		Data::instance()->sprite((int)_state));
 }
@@ -77,7 +77,7 @@ void PlayerBehaviour::handleCollision()
 			_collisionTimer.stop();
 
 			_state = Down;
-			_gameObject->physics()->setFriction(Vector2f { 1.0f, 0.5f });
+			_gameObject->physics()->setFriction(Vector2f{1.0f, 0.5f});
 		}
 	}
 }

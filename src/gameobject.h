@@ -56,13 +56,14 @@ private:
 	// State of whether or not the GameObject should be deleted.
 	bool _delete = false;
 
-	// Whether or not this GameObject
+	// If update() should be skipped for this GameObject (already called by
+	// parent GameObject).
 	bool _skipUpdate = false;
 
 	// The name of the GameObject.
 	const char* _name = nullptr;
 
-	// The index of the GameObject in it's storage structure.
+	// The index of the GameObject in the storage structure.
 	int _index = -1;
 
 	// The renderer component object.

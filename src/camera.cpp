@@ -65,5 +65,5 @@ bool Camera::onScreen(Rect rect) const
 
 Vector2 Camera::relative(Vector2 position) const
 {
-	return Vector2 { position.x - _geometry.x, position.y - _geometry.y };
+	return Vector2{position.x - _geometry.x, position.y - _geometry.y};
 }

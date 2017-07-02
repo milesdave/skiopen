@@ -29,9 +29,9 @@ void Renderer::render(Vector2f position)
 
 	animate();
 
-	Vector2 relative = Game::instance()->camera()->relative(Vector2 { (int)position.x, (int)position.y });
+	Vector2 relative = Game::instance()->camera()->relative(Vector2{(int)position.x, (int)position.y});
 	Rect source = _sprite->clips[_frame];
-	Rect destination = Game::centre(Rect { relative.x, relative.y, source.w, source.h }, relative);
+	Rect destination = Game::centre(Rect{relative.x, relative.y, source.w, source.h}, relative);
 
 	SDL_RenderCopy(Game::instance()->renderer(), _sprite->sheet->texture, &source, &destination);
 }

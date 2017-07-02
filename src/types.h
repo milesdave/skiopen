@@ -44,7 +44,7 @@ struct Vector2f
 
 	static constexpr Vector2f zero()
 	{
-		return Vector2f { 0.0f, 0.0f };
+		return Vector2f{0.0f, 0.0f};
 	}
 
 	float x;

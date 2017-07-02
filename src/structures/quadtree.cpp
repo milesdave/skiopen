@@ -109,10 +109,10 @@ void Quadtree::split()
 	int x = _bounds.x;
 	int y = _bounds.y;
 
-	_node[0] = new Quadtree(_level + 1, Rect { x + w, y, w, h });
-	_node[1] = new Quadtree(_level + 1, Rect { x, y, w, h });
-	_node[2] = new Quadtree(_level + 1, Rect { x, y + h, w, h });
-	_node[3] = new Quadtree(_level + 1, Rect { x + w, y + h, w, h });
+	_node[0] = new Quadtree(_level + 1, Rect{x + w, y, w, h});
+	_node[1] = new Quadtree(_level + 1, Rect{x, y, w, h});
+	_node[2] = new Quadtree(_level + 1, Rect{x, y + h, w, h});
+	_node[3] = new Quadtree(_level + 1, Rect{x + w, y + h, w, h});
 }
 
 int Quadtree::getIndex(Hitbox hitbox)

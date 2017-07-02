@@ -15,10 +15,10 @@ void MainLevel::onLoad()
 	// Create the player object.
 	_player = Game::instance()->createGameObject();
 	_player->renderer()->setSprite(Data::instance()->sprite(SP_PLAYER_DOWN));
-	_player->physics()->setFriction(Vector2f { 1.0f, 0.5f });
-	_player->physics()->setMaxVelocity(Vector2f { 325.0f, 500.0f });
-	_player->physics()->setMinVelocity(Vector2f { -325.0f, 0.0f });
-	_player->physics()->setHitbox(Hitbox { 0, 0, 32, 32 });
+	_player->physics()->setFriction(Vector2f{1.0f, 0.5f});
+	_player->physics()->setMaxVelocity(Vector2f{325.0f, 500.0f});
+	_player->physics()->setMinVelocity(Vector2f{-325.0f, 0.0f});
+	_player->physics()->setHitbox(Hitbox{0, 0, 32, 32});
 	_player->setBehaviour(new PlayerBehaviour());
 
 	Game::instance()->camera()->setFocus(_player);
@@ -27,25 +27,25 @@ void MainLevel::onLoad()
 	// Game title.
 	GameObject* sign1 = Game::instance()->createGameObject();
 	sign1->renderer()->setSprite(Data::instance()->sprite(SP_SIGN1));
-	sign1->physics()->setPosition(Vector2f { -150.0f, -125.0f });
+	sign1->physics()->setPosition(Vector2f{-150.0f, -125.0f});
 	sign1->setBehaviour(new ObstacleBehaviour());
 
 	// Movement help sign.
 	GameObject* sign2 = Game::instance()->createGameObject();
 	sign2->renderer()->setSprite(Data::instance()->sprite(SP_SIGN2));
-	sign2->physics()->setPosition(Vector2f { 75.0f, -100.0f });
+	sign2->physics()->setPosition(Vector2f{75.0f, -100.0f});
 	sign2->setBehaviour(new ObstacleBehaviour());
 
 	// Other buttons sign.
 	GameObject* sign3 = Game::instance()->createGameObject();
 	sign3->renderer()->setSprite(Data::instance()->sprite(SP_SIGN3));
-	sign3->physics()->setPosition(Vector2f { 170.0f, -140.0f });
+	sign3->physics()->setPosition(Vector2f{170.0f, -140.0f});
 	sign3->setBehaviour(new ObstacleBehaviour());
 
 	// Goat sign.
 	GameObject* sign4 = Game::instance()->createGameObject();
 	sign4->renderer()->setSprite(Data::instance()->sprite(SP_SIGN4));
-	sign4->physics()->setPosition(Vector2f { 175.0f, -60.0f });
+	sign4->physics()->setPosition(Vector2f{175.0f, -60.0f});
 	sign4->setBehaviour(new ObstacleBehaviour());
 
 	Game::instance()->windowDimentions(&_winWidth, &_winHeight);
@@ -54,10 +54,10 @@ void MainLevel::onLoad()
 	for(int i = 0; i < 4; i++)
 	{
 		_text[i].setFont(Data::instance()->sheet(SH_FONT));
-		_text[i].setPosition(Vector2 { 10, 12 * (i + 1) });
+		_text[i].setPosition(Vector2{10, 12 * (i + 1)});
 	}
 	_pausedText.setFont(Data::instance()->sheet(SH_FONT));
-	_pausedText.setPosition(Vector2 { (_winWidth / 2) - 30, (_winHeight / 2) - 30 });
+	_pausedText.setPosition(Vector2{(_winWidth / 2) - 30, (_winHeight / 2) - 30});
 
 	generateObstacles();
 }
@@ -109,7 +109,7 @@ void MainLevel::generateObstacles(int offset)
 
 		GameObject* obstacle = Game::instance()->createGameObject();
 		obstacle->physics()->setPosition(randPosition);
-		obstacle->physics()->setHitbox(Hitbox { 0, 0, 32, 32 });
+		obstacle->physics()->setHitbox(Hitbox{0, 0, 32, 32});
 
 		if(i == 0)
 		{
