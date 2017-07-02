@@ -9,4 +9,3 @@ A Windows `.exe` is available from the releases [here](../../releases/).
 ## TODO
 
 - Better `Input` class operation (replace SDL event queue for input)
-- Overhaul `List` structure
