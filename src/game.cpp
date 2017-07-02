@@ -215,10 +215,13 @@ void Game::render()
 {
 	SDL_RenderClear(_renderer);
 
-	for(int i = 0; i < _renderList.size(); i++)
-		_renderList[i]->render();
+	const List<GameObject*>::Node* node = _renderList.head();
+	while(node)
+	{
+		node->data()->render();
+		node = _renderList.next(node);
+	}
 	_renderList.clear();
-
 	_currentLevel->render();
 
 	SDL_RenderPresent(_renderer);
