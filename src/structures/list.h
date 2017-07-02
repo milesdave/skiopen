@@ -5,57 +5,63 @@ template <typename T>
 class List
 {
 public:
-	List() { }
+	List();
 
 	~List();
 
-	// adds an object at the index specified
-	void add(T object, int index);
-
-	// adds an object to the end of the list
-	inline void add(T object) { add(object, m_size); }
-
-	// returns a pointer to the object at the specified index
-	T get(int index);
-
-	// returns a pointer to the object at the specified index
-	inline T operator[](int index) { return get(index); }
-
-	// removes an object from the specified index
-	void remove(int index);
-
-	// removes all nodes from the list
-	void clear();
-
-	// returns the number of objects in the list
-	inline int size() const { return m_size; }
-
-private:
-	// moves the access pointer to the specified index
-	void move(int index);
-
-	// node structure
-	struct Node
+	// Class which represents a List node.
+	class Node
 	{
-		T data;
-		Node *next;
-		Node *prev;
+	public:
+		Node();
+
+		~Node();
+
+		// Returns a pointer to the node data.
+		const T data() const { return &_data; }
+
+	private:
+		// The data stored in this node.
+		T _data = nullptr;
+
+		// Pointer to the next node.
+		Node* _next = nullptr;
+
+		// Pointer to the previous node.
+		Node* _prev = nullptr;
 	};
 
-	// pointer to the start of the list
-	Node *m_head = nullptr;
+	// Adds a new node containing the specified data to the end of the List.
+	void add(T data);
 
-	// pointer to the end of the list
-	Node *m_tail = nullptr;
+	// Returns a pointer to the node data at the specified index, nullptr if
+	// index is not valid.
+	T operator[](int index);
 
-	// pointer to the current node to access
-	Node *m_pointer = nullptr;
+	// Returns a pointer to the node after the specified node.
+	Node* next(Node* node);
 
-	// position of the current node to access
-	int m_position = 0;
+	// Returns a pointer to the node before the specified node.
+	Node* previous(Node* node);
 
-	// number of objects in the list
-	int m_size = 0;
+	// Removes the node at the specified index.
+	void remove(int index);
+
+	// Removes all nodes from the List.
+	void clear();
+
+	// Returns the number of nodes in the List.
+	inline int size() const { return _size; }
+
+private:
+	// Pointer to the first node.
+	Node* _head = nullptr;
+
+	// Pointer to the last node.
+	Node* _tail = nullptr;
+
+	// The number of nodes in the list.
+	int _size = 0;
 };
 
 #include "list.tcc"
