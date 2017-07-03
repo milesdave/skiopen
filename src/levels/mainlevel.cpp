@@ -18,7 +18,7 @@ void MainLevel::onLoad()
 	_player->physics()->setFriction(Vector2f{1.0f, 0.5f});
 	_player->physics()->setMaxVelocity(Vector2f{325.0f, 500.0f});
 	_player->physics()->setMinVelocity(Vector2f{-325.0f, 0.0f});
-	_player->physics()->setHitbox(Hitbox{0, 0, 32, 32});
+	_player->physics()->setHitbox(Hitbox{0, 0, 20, 30});
 	_player->setBehaviour(new PlayerBehaviour());
 
 	Game::instance()->camera()->setFocus(_player);
@@ -109,7 +109,7 @@ void MainLevel::generateObstacles(int offset)
 
 		GameObject* obstacle = Game::instance()->createGameObject();
 		obstacle->physics()->setPosition(randPosition);
-		obstacle->physics()->setHitbox(Hitbox{0, 0, 32, 32});
+		obstacle->physics()->setHitbox(Hitbox{0, 0, 25, 30});
 
 		if(i == 0)
 		{
