@@ -37,11 +37,11 @@ void Camera::setFocus(GameObject *focus)
 {
 	_focus = focus;
 
-	Vector2f position = _focus->physics()->position();
+	Vector2 position = _focus->physics()->position().vector2();
 
 	// Centre on focus' position.
-	_geometry.x = (int)position.x - (_geometry.w / 2);
-	_geometry.y = (int)position.y - (_geometry.h / 3);
+	_geometry.x = position.x - (_geometry.w / 2);
+	_geometry.y = position.y - (_geometry.h / 3);
 }
 
 void Camera::setGeometry(Rect geometry)

@@ -27,7 +27,7 @@ struct Vector2f
 		x *= a; y *= a;
 	}
 
-	Vector2f operator*(float a)
+	Vector2f operator*(float a) const
 	{
 		Vector2f v;
 		v.x = x * a;
@@ -35,11 +35,16 @@ struct Vector2f
 		return v;
 	}
 
-	bool operator==(const Vector2f& v)
+	bool operator==(const Vector2f& v) const
 	{
 		if(x == v.x && y == v.y)
 			return true;
 		return false;
+	}
+
+	Vector2 vector2() const
+	{
+		return Vector2{(int)x, (int)y};
 	}
 
 	static constexpr Vector2f zero()

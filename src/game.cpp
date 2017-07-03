@@ -195,7 +195,7 @@ void Game::update()
 		if(gObject)
 		{
 			// Update the GameObject if possible.
-			if(!_paused && !gObject->_skipUpdate)
+			if(!_paused)
 				gObject->update();
 
 			// Delete the GameObject if neccissary.
@@ -288,7 +288,7 @@ Rect Game::centre(Rect original, Vector2 point)
 
 Rect Game::centre(Rect original, Vector2f point)
 {
-	return Game::centre(original, Vector2 { (int)point.x, (int)point.y });
+	return Game::centre(original, point.vector2());
 }
 
 void Game::setWindowIcon()

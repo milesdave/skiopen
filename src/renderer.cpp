@@ -29,7 +29,7 @@ void Renderer::render(Vector2f position)
 
 	animate();
 
-	Vector2 relative = Game::instance()->camera()->relative(Vector2{(int)position.x, (int)position.y});
+	Vector2 relative = Game::instance()->camera()->relative(position.vector2());
 	Rect source = _sprite->clips[_frame];
 	Rect destination = Game::centre(Rect{relative.x, relative.y, source.w, source.h}, relative);
 
