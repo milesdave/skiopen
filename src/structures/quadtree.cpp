@@ -68,7 +68,7 @@ void Quadtree::insert(GameObject* gameObject)
 			if(index != -1)
 			{
 				// Move GameObject to it's new node.
-				_node[i]->insert(_gameObjects[i]);
+				_node[index]->insert(_gameObjects[i]);
 				_gameObjects.remove(i);
 			}
 			else
