@@ -1,8 +1,10 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
+#include <cmath>
 #include <SDL_rect.h>
 #include <SDL_stdinc.h>
+
 typedef SDL_Rect Rect, Hitbox;
 
 struct Vector2
@@ -45,7 +47,7 @@ struct Vector2f
 
 	Vector2 vector2() const
 	{
-		return Vector2{(int)x, (int)y};
+		return Vector2{(int)roundf(x), (int)roundf(y)};
 	}
 
 	static constexpr Vector2f zero()
