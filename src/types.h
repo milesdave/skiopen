@@ -2,6 +2,7 @@
 #define TYPES_H_
 
 #include <SDL_rect.h>
+#include <SDL_stdinc.h>
 typedef SDL_Rect Rect, Hitbox;
 
 struct Vector2
@@ -54,6 +55,14 @@ struct Vector2f
 
 	float x;
 	float y;
+};
+
+struct Colour
+{
+	Uint8 r;
+	Uint8 g;
+	Uint8 b;
+	Uint8 a;
 };
 
 #endif

@@ -38,6 +38,9 @@ public:
 	// Sets the current level.
 	void setLevel(int index);
 
+	// Sets the renderer draw colour.
+	void setDrawColour(Colour colour);
+
 	// Returns a pointer to the SDL renderer.
 	inline SDL_Renderer* renderer() const { return _renderer; }
 
@@ -50,14 +53,14 @@ public:
 	// Returns whether or not the game is paused.
 	inline bool isPaused() const { return _paused; }
 
-	// Returns a pointer to this singular Game instance.
-	static inline Game* instance() { return _instance; }
-
 	// Sets the player GameObject.
 	inline void setPlayer(GameObject* player) { _player = player; }
 
 	// Clears the GameObject array.
 	inline void clearGameObjects() { _gameObjects.clear(); }
+
+	// Returns a pointer to this singular Game instance.
+	static inline Game* instance() { return _instance; }
 
 	// Returns a random integer in a range.
 	static int randomInRange(int min, int max);

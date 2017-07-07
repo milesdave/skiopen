@@ -50,7 +50,7 @@ void Game::init()
 	_winHeight = (int)(screenInfo.h * 0.85f);
 
 	_window = SDL_CreateWindow("SkiOpen", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, _winWidth, _winHeight, SDL_WINDOW_SHOWN);
+		SDL_WINDOWPOS_CENTERED, _winWidth, _winHeight, SDL_WINDOW_HIDDEN);
 	if(!_window)
 		panic("SDL_CreateWindow()", SDL_GetError());
 
@@ -61,16 +61,17 @@ void Game::init()
 	if(!_renderer)
 		panic("SDL_CreateRenderer()", SDL_GetError());
 
-	SDL_SetRenderDrawColor(_renderer, 0xF2, 0xF2, 0xF2, 0xFF);
+	SDL_SetRenderDrawColor(_renderer, 0x00, 0x00, 0x00, 0xFF);
+	SDL_ShowWindow(_window);
 
 	srand((unsigned)time(nullptr));
 
 	Data::instance()->load();
 	Input::initController();
 	_gameObjects.init(128);
-	_camera.setGeometry(Rect { 0, 0, _winWidth, _winHeight });
+	_camera.setGeometry(Rect{0, 0, _winWidth, _winHeight});
 
-	_quadtree = new Quadtree(0, Rect { 0, 0, _winWidth, _winHeight });
+	_quadtree = new Quadtree(0, Rect{0, 0, _winWidth, _winHeight});
 
 	setup();
 }
@@ -273,6 +274,11 @@ void Game::restart()
 
 	_currentLevel->onExit();
 	_currentLevel->onLoad();
+}
+
+void Game::setDrawColour(Colour colour)
+{
+	SDL_SetRenderDrawColor(_renderer, colour.r, colour.g, colour.b, colour.a);
 }
 
 int Game::randomInRange(int min, int max)

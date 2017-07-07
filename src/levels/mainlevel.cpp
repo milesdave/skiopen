@@ -49,6 +49,7 @@ void MainLevel::onLoad()
 	sign4->setBehaviour(new ObstacleBehaviour());
 
 	Game::instance()->windowDimentions(&_winWidth, &_winHeight);
+	Game::instance()->setDrawColour(Colour{0xF2, 0xF2, 0xF2, 0xFF});
 
 	// Setup the Text objects.
 	for(int i = 0; i < 4; i++)
