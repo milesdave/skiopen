@@ -55,6 +55,7 @@
     <ClInclude Include="src\structures\array.h" />
     <ClInclude Include="src\structures\list.h" />
     <ClInclude Include="src\structures\quadtree.h" />
+    <ClInclude Include="src\structures\queue.h" />
     <ClInclude Include="src\text.h" />
     <ClInclude Include="src\timer.h" />
     <ClInclude Include="src\types.h" />
