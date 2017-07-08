@@ -1,36 +1,68 @@
-#include <SDL.h>
 #include "game.h"
 #include "input.h"
 
+#include <cstdio> // TODO
+
 Input::Input() { }
 
-Input::~Input() { }
+Input::~Input()
+{
+	closeController();
+}
+
+Input* Input::instance()
+{
+	if(!_instance)
+		_instance = new Input();
+	return _instance;
+}
 
 void Input::initController()
 {
-	if(SDL_NumJoysticks() < 1 || !SDL_IsGameController(0))
+	if(!SDL_IsGameController(0))
 		return;
 
 	_controller = SDL_GameControllerOpen(0);
 	if(!_controller)
 		Game::instance()->panic("SDL_GameControllerOpen()", SDL_GetError());
+
+	printf("Controller connected!\n");
 }
 
 void Input::closeController()
 {
 	if(_controller)
+	{
 		SDL_GameControllerClose(_controller);
+		_controller = nullptr;
+		printf("Controller disconnected!\n");
+	}
 }
+
+bool Input::pollEvent(InputEvent* input)
+{
+	if(_events.size() > 0)
+	{
+		*input = _events.poll();
+		return true;
+	}
+
+	return false;
+}
+
+Input* Input::_instance = nullptr;
 
 bool Input::input(Key key)
 {
-	if(_controller)
+	/*if(_controller)
 		return buttonDown(key);
 	else
-		return keyDown(key);
+		return keyDown(key);*/
+
+	return false;
 }
 
-bool Input::buttonDown(Key key)
+/*bool Input::buttonDown(Key key)
 {
 	bool result = SDL_GameControllerGetButton(_controller,
 		(SDL_GameControllerButton)key) ? true : false;
@@ -114,6 +146,4 @@ bool Input::joystick(Joystick stick, Direction direction)
 	}
 
 	return false;
-}
-
-SDL_GameController* Input::_controller = nullptr;
+}*/

@@ -1,8 +1,8 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-#include <SDL_gamecontroller.h>
-#include <SDL_scancode.h>
+#include <SDL.h>
+#include "structures/queue.h"
 
 enum Key
 {
@@ -14,41 +14,53 @@ enum Key
 	Reset = SDL_CONTROLLER_BUTTON_BACK
 };
 
-enum Joystick
-{
-	JLeft,
-	JRight
-};
-
-enum Direction
-{
-	DUp = Up,
-	DDown = Down,
-	DLeft = Left,
-	DRight = Right
-};
+typedef SDL_Event InputEvent;
 
 class Input
 {
-public:
-	Input();
+	friend class Game;
 
+public:
 	~Input();
 
+	// Returns a pointer to this singleton instance.
+	static Input* instance();
+
 	// Opens a controller if one is dectected.
-	static void initController();
+	void initController();
 
 	// Closes a controller if one is open.
-	static void closeController();
+	void closeController();
 
 	// Returns true if a controller is connected.
-	static bool controller() { return _controller ? true : false; }
+	inline bool controller() const { return _controller ? true : false; }
+
+	// Fills in the event with the next event in the queue if one exists.
+	bool pollEvent(InputEvent* input);
+
+	///////////////////////////////////////////////
 
 	// Returns true if the specified keyboard key/controller button is down.
 	static bool input(Key key);
 
 private:
-	// Returns true if the specified controller button is down.
+	Input();
+
+	// Adds an SDL_Event to the event queue.
+	void offerEvent(InputEvent e) { _events.offer(e); }
+
+	// The connected controller.
+	SDL_GameController* _controller = nullptr;
+
+	// The event queue.
+	Queue<SDL_Event> _events;
+
+	// This singleton instance.
+	static Input* _instance;
+
+	///////////////////////////////////////////////
+
+	/* Returns true if the specified controller button is down.
 	static bool buttonDown(Key key);
 
 	// Returns true if the specified keyboard key is down.
@@ -57,11 +69,8 @@ private:
 	// Returns true if the specified stick is in the specified direction.
 	static bool joystick(Joystick stick, Direction direction);
 
-	// The connected controller.
-	static SDL_GameController* _controller;
-
 	// Joystick deadzone.
-	static constexpr Sint16 DEADZONE = 14000;
+	static constexpr Sint16 DEADZONE = 14000;*/
 };
 
 #endif
