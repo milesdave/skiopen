@@ -85,19 +85,10 @@ GOList* Quadtree::retrieve(GOList* gameObjects, GameObject* subject)
 
 	// Recursively find the correct node.
 	if(index != -1 && _node[0])
-	{
 		_node[index]->retrieve(gameObjects, subject);
-	}
 	// Return all GameObjects from node.
 	else
-	{
-		const GOList::Node* node = _gameObjects.head();
-		while(node)
-		{
-			gameObjects->add(node->data());
-			node = _gameObjects.next(node);
-		}
-	}
+		*gameObjects = _gameObjects;
 
 	return gameObjects;
 }

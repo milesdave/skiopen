@@ -9,6 +9,9 @@ public:
 
 	~List();
 
+	// Copies the contents of the other List.
+	void operator=(const List& other);
+
 	// Class which represents a List node.
 	class Node
 	{
