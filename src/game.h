@@ -35,6 +35,9 @@ public:
 	// Removes a GameObject from use.
 	void removeGameObject(GameObject* gameObject);
 
+	// Adds a level to the game.
+	void addLevel(Level* level);
+
 	// Sets the current level.
 	void setLevel(int index);
 
@@ -70,9 +73,6 @@ public:
 	static Rect centre(Rect original, Vector2f point);
 
 private:
-	// Gameplay setup before loop().
-	void setup();
-
 	// Handles user interaction.
 	void handleInput();
 
@@ -130,8 +130,8 @@ private:
 	// List of GameObjects to render.
 	List<GameObject*> _renderList;
 
-	// Array of levels.
-	Level* _levels[LEVELS];
+	// List of levels.
+	List<Level*> _levels;
 
 	// Pointer to the current level.
 	Level* _currentLevel = nullptr;

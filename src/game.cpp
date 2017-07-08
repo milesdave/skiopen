@@ -4,7 +4,6 @@
 #include "data.h"
 #include "game.h"
 #include "input.h"
-#include "levels/mainlevel.h"
 
 #if _WIN32
 #include <SDL_syswm.h>
@@ -26,8 +25,12 @@ Game::~Game()
 	Input::closeController();
 	delete Data::instance();
 
-	for(int i = 0; i < LEVELS; i++)
-		delete _levels[i];
+	const List<Level*>::Node* node = _levels.head();
+	while(node)
+	{
+		delete node->data();
+		node = _levels.next(node);
+	}
 
 	if(_quadtree)
 		delete _quadtree;
@@ -72,8 +75,6 @@ void Game::init()
 	_camera.setGeometry(Rect{0, 0, _winWidth, _winHeight});
 
 	_quadtree = new Quadtree(0, Rect{0, 0, _winWidth, _winHeight});
-
-	setup();
 }
 
 void Game::loop()
@@ -137,6 +138,11 @@ void Game::removeGameObject(GameObject* gameObject)
 	_gameObjects.remove(gameObject->_index);
 }
 
+void Game::addLevel(Level* level)
+{
+	_levels.add(level);
+}
+
 void Game::setLevel(int index)
 {
 	if(_currentLevel)
@@ -144,12 +150,6 @@ void Game::setLevel(int index)
 
 	_currentLevel = _levels[index];
 	_currentLevel->onLoad();
-}
-
-void Game::setup()
-{
-	_levels[L_MAIN] = new MainLevel();
-	setLevel(L_MAIN);
 }
 
 void Game::handleInput()
@@ -232,7 +232,9 @@ void Game::render()
 		node = _renderList.next(node);
 	}
 	_renderList.clear();
-	_currentLevel->render();
+
+	if(_currentLevel)
+		_currentLevel->render();
 
 	SDL_RenderPresent(_renderer);
 }
@@ -288,8 +290,8 @@ int Game::randomInRange(int min, int max)
 
 Rect Game::centre(Rect original, Vector2 point)
 {
-	return Rect { point.x - (original.w / 2),
-		point.y - (original.h / 2), original.w, original.h };
+	return Rect{point.x - (original.w / 2),
+		point.y - (original.h / 2), original.w, original.h};
 }
 
 Rect Game::centre(Rect original, Vector2f point)

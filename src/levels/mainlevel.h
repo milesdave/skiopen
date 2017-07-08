@@ -5,6 +5,8 @@
 #include "../timer.h"
 #include "level.h"
 
+#define L_MAIN 0
+
 class GameObject;
 
 class MainLevel : public Level

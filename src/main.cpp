@@ -9,12 +9,15 @@
 #endif
 
 #include "game.h"
+#include "levels/mainlevel.h"
 
 int main(int argc, char* argv[])
 {
 	{
 		Game game;
 		game.init();
+		game.addLevel(new MainLevel());
+		game.setLevel(L_MAIN);
 		game.loop();
 	}
 

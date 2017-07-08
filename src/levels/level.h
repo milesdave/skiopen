@@ -22,8 +22,4 @@ public:
 	virtual void onExit() { }
 };
 
-#define LEVELS 1
-
-#define L_MAIN 0
-
 #endif
