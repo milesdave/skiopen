@@ -1,8 +1,10 @@
 #include "../game.h"
-#include "../input.h"
 #include "player.h"
 
-PlayerBehaviour::PlayerBehaviour() { }
+PlayerBehaviour::PlayerBehaviour()
+{
+	_input = Input::instance();
+}
 
 PlayerBehaviour::~PlayerBehaviour() { }
 
@@ -39,33 +41,46 @@ void PlayerBehaviour::handleInput()
 	if(_state == Collision || _state == Stopped)
 		return;
 
-	Vector2f add = { 0.0f, 0.0f };
-
-	Event e;
-	while(Input::instance()->pollEvent(&e))
+	SDL_Event e;
+	while(_input->pollEvent(&e))
 	{
-		if(e.type == Release)
+		switch(e.type)
 		{
-			switch(e.event)
-			{
-			case Pause:
+		case SDL_KEYUP:
+			if(e.key.keysym.sym == SDLK_F3)
 				Game::instance()->pause();
-				break;
-			case Restart:
+			if(e.key.keysym.sym == SDLK_F2)
 				Game::instance()->restart();
-				break;
-			}
+			break;
 		}
 	}
 
-	if(Input::instance()->instant(Key::Up))
+	Vector2f add = {0.0f, 0.0f};
+	Input::State input;
+	
+	input = _input->instant(Input::InputType::Up);
+	if(input == Input::State::Pressed)
 		add.y -= VELOCITY_MOD.y;
-	if(Input::instance()->instant(Key::Down))
+	else if(input == Input::State::Half)
+		add.y -= VELOCITY_MOD_HALF.y;
+
+	input = _input->instant(Input::InputType::Down);
+	if(input == Input::State::Pressed)
 		add.y += VELOCITY_MOD.y;
-	if(Input::instance()->instant(Key::Left))
+	else if(input == Input::State::Half)
+		add.y += VELOCITY_MOD_HALF.y;
+
+	input = _input->instant(Input::InputType::Left);
+	if(input == Input::State::Pressed)
 		add.x -= VELOCITY_MOD.x;
-	if(Input::instance()->instant(Key::Right))
+	else if(input == Input::State::Half)
+		add.x -= VELOCITY_MOD_HALF.x;
+
+	input = _input->instant(Input::InputType::Right);
+	if(input == Input::State::Pressed)
 		add.x += VELOCITY_MOD.x;
+	else if(input == Input::State::Half)
+		add.x += VELOCITY_MOD_HALF.x;
 
 	_gameObject->physics()->addVelocity(add);
 }

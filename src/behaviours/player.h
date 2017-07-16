@@ -2,6 +2,7 @@
 #define BEHAVIOURS_PLAYER_H_
 
 #include "../data.h"
+#include "../input.h"
 #include "../timer.h"
 #include "../types.h"
 #include "behaviour.h"
@@ -46,12 +47,15 @@ private:
 	// Current sprite state.
 	State _state = Down;
 
-	// Vector to modify the velocity with.
-	static constexpr Vector2f VELOCITY_MOD = { 4.0f, 2.5f };
-	static constexpr Vector2f VELOCITY_MOD_HALF = { 2.0f, 1.25f };
-
 	// After collision wait timer.
 	Timer _collisionTimer;
+
+	// The Input class instance.
+	Input* _input = nullptr;
+
+	// Vector to modify the velocity with.
+	static constexpr Vector2f VELOCITY_MOD = { 4.0f, 2.5f };
+	static constexpr Vector2f VELOCITY_MOD_HALF = { 1.0f, 0.75f };
 };
 
 #endif

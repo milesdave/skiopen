@@ -3,25 +3,29 @@
 
 #include <SDL.h>
 #include "structures/queue.h"
-
-enum Key
-{
-	Up = SDL_CONTROLLER_BUTTON_DPAD_UP,
-	Down = SDL_CONTROLLER_BUTTON_DPAD_DOWN,
-	Left = SDL_CONTROLLER_BUTTON_DPAD_LEFT,
-	Right = SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
-	Pause = SDL_CONTROLLER_BUTTON_START,
-	Reset = SDL_CONTROLLER_BUTTON_BACK
-};
-
-typedef SDL_Event InputEvent;
+#include "types.h"
 
 class Input
 {
-	friend class Game;
-
 public:
 	~Input();
+
+	// The state of the InputType.
+	enum State
+	{
+		Released = 0,
+		Half = 1,
+		Pressed = 2
+	};
+
+	// The types of input used in this game.
+	enum InputType
+	{
+		Up,
+		Down,
+		Left,
+		Right,
+	};
 
 	// Returns a pointer to this singleton instance.
 	static Input* instance();
@@ -35,19 +39,24 @@ public:
 	// Returns true if a controller is connected.
 	inline bool controller() const { return _controller ? true : false; }
 
-	// Fills in the event with the next event in the queue if one exists.
-	bool pollEvent(InputEvent* input);
+	// Returns the state of the specified input right now.
+	State instant(InputType input) const;
 
-	///////////////////////////////////////////////
+	// Fills in the event with the next event in the Queue if one exists.
+	bool pollEvent(SDL_Event* e);
 
-	// Returns true if the specified keyboard key/controller button is down.
-	static bool input(Key key);
+	// Adds an SDL_Event to the Queue. Should only be used by the Game
+	// class.
+	void offerEvent(SDL_Event e);
 
 private:
 	Input();
 
-	// Adds an SDL_Event to the event queue.
-	void offerEvent(InputEvent e) { _events.offer(e); }
+	// Returns the state of the specified input on the controller.
+	State controllerInstant(InputType input) const;
+
+	// Returns the state of the specified input on the keyboard.
+	State keyboardInstant(InputType input) const;
 
 	// The connected controller.
 	SDL_GameController* _controller = nullptr;
@@ -58,19 +67,9 @@ private:
 	// This singleton instance.
 	static Input* _instance;
 
-	///////////////////////////////////////////////
-
-	/* Returns true if the specified controller button is down.
-	static bool buttonDown(Key key);
-
-	// Returns true if the specified keyboard key is down.
-	static bool keyDown(Key key);
-
-	// Returns true if the specified stick is in the specified direction.
-	static bool joystick(Joystick stick, Direction direction);
-
-	// Joystick deadzone.
-	static constexpr Sint16 DEADZONE = 14000;*/
+	// Controller analogue stick deadzones.
+	static constexpr Sint16 DEADZONE = 22000;
+	static constexpr Sint16 DEADZONE_HALF = 15000;
 };
 
 #endif
