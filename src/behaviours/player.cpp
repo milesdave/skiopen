@@ -1,3 +1,4 @@
+#include "../game.h"
 #include "../input.h"
 #include "player.h"
 
@@ -8,14 +9,9 @@ PlayerBehaviour::~PlayerBehaviour() { }
 void PlayerBehaviour::update()
 {
 	if(_state == Collision || _state == Stopped)
-	{
 		handleCollision();
-	}
 	else
-	{
-		handleInput();
 		updateSprite();
-	}
 }
 
 void PlayerBehaviour::collide()
@@ -40,15 +36,35 @@ void PlayerBehaviour::collide()
 
 void PlayerBehaviour::handleInput()
 {
+	if(_state == Collision || _state == Stopped)
+		return;
+
 	Vector2f add = { 0.0f, 0.0f };
 
-	if(Input::input(Key::Up))
+	Event e;
+	while(Input::instance()->pollEvent(&e))
+	{
+		if(e.type == Release)
+		{
+			switch(e.event)
+			{
+			case Pause:
+				Game::instance()->pause();
+				break;
+			case Restart:
+				Game::instance()->restart();
+				break;
+			}
+		}
+	}
+
+	if(Input::instance()->instant(Key::Up))
 		add.y -= VELOCITY_MOD.y;
-	if(Input::input(Key::Down))
+	if(Input::instance()->instant(Key::Down))
 		add.y += VELOCITY_MOD.y;
-	if(Input::input(Key::Left))
+	if(Input::instance()->instant(Key::Left))
 		add.x -= VELOCITY_MOD.x;
-	if(Input::input(Key::Right))
+	if(Input::instance()->instant(Key::Right))
 		add.x += VELOCITY_MOD.x;
 
 	_gameObject->physics()->addVelocity(add);

@@ -178,6 +178,9 @@ void Game::handleInput()
 			break;
 		}
 	}
+
+	if(_player)
+		_player->behaviour()->handleInput();
 }
 
 void Game::update()

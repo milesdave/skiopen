@@ -15,6 +15,9 @@ public:
 	// Updates the behavior state.
 	virtual void update() = 0;
 
+	// Handles player input.
+	virtual void handleInput() { }
+
 	// Handles a collision event.
 	virtual void collide() { }
 
