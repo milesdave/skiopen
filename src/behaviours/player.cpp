@@ -43,27 +43,6 @@ void PlayerBehaviour::handleInput()
 
 	Vector2f add = {0.0f, 0.0f};
 
-	// Button release events.
-	Input::InputEvent e;
-	while(_input->pollEvent(&e))
-	{
-		switch(e.input)
-		{
-		case Input::In::Start:
-			if(!e.state)
-				Game::instance()->pause();
-			break;
-		case Input::In::Select:
-			if(!e.state)
-				Game::instance()->restart();
-			break;
-		}
-	}
-
-	// TODO Maybe pausing shouldn't be done here.
-	if(Game::instance()->isPaused())
-		return;
-
 	// Input state as of right now.
 	Sint16 state = _input->getInput(Input::In::LeftStickY);
 

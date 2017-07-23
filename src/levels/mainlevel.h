@@ -20,6 +20,7 @@ public:
 	void onLoad() override;
 	void update() override;
 	void render() override;
+	void handleInput() override;
 	void pause(bool paused) override;
 	void onExit() override;
 

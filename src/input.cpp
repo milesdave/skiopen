@@ -47,17 +47,6 @@ Sint16 Input::getInput(In input) const
 		(SDL_GameControllerButton)input);
 }
 
-bool Input::pollEvent(InputEvent* e)
-{
-	if(_events.size() > 0)
-	{
-		*e = _events.poll();
-		return true;
-	}
-
-	return false;
-}
-
 void Input::offerEvent(const SDL_Event& e)
 {
 	// Note: only controller events are currently supported.

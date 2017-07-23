@@ -25,6 +25,20 @@ List<T>::~List()
 }
 
 template <typename T>
+List<T>::List(const List<T>& other)
+{
+	if(_size > 0)
+		clear();
+
+	Node* current = other._head;
+	while(current)
+	{
+		add(current->_data);
+		current = current->_next;
+	}
+}
+
+template <typename T>
 void List<T>::operator=(const List<T>& other)
 {
 	if(_size > 0)

@@ -3,6 +3,7 @@
 #include "../behaviours/player.h"
 #include "../data.h"
 #include "../game.h"
+#include "../input.h"
 #include "../renderer.h"
 #include "mainlevel.h"
 
@@ -76,6 +77,28 @@ void MainLevel::render()
 	for(int i = 0; i < 4; i++)
 		_text[i].render();
 	_pausedText.render();
+}
+
+void MainLevel::handleInput()
+{
+	Queue<Input::InputEvent> inputs(Input::instance()->events());
+
+	while(inputs.size() > 0)
+	{
+		Input::InputEvent e = inputs.poll();
+
+		switch(e.input)
+		{
+		case Input::In::Start:
+			if(!e.state)
+				Game::instance()->pause();
+			break;
+		case Input::In::Select:
+			if(!e.state)
+				Game::instance()->restart();
+			break;
+		}
+	}
 }
 
 void MainLevel::pause(bool paused)

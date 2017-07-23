@@ -11,6 +11,12 @@ public:
 
 	~Queue() { }
 
+	// Copies the contents of the other Queue.
+	inline Queue(const Queue& other) : _list(other._list) { }
+
+	// Copies the contents of the other Queue.
+	inline void operator=(const Queue& other) { _list = other._list; }
+
 	// Adds an object to the end of the Queue.
 	inline void offer(T object) { _list.add(object); }
 

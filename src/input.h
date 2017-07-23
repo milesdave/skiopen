@@ -58,8 +58,9 @@ public:
 	// Returns the state of the specified input right now.
 	Sint16 getInput(In input) const;
 
-	// Fills in the event with the next event in the Queue if one exists.
-	bool pollEvent(InputEvent* e);
+	// Returns a constant reference to the input event queue, allowing it
+	// to be copied.
+	inline const Queue<InputEvent>& events() const { return _events; }
 
 	// Converst an SDL_Event and adds it to the Queue. Should only be used
 	// by the Game class.

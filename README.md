@@ -8,6 +8,5 @@ A Windows `.exe` is available from the releases [here](../../releases/).
 
 ## TODO
 
-- Better `Input` class operation
 - `OpenGL` support
 - Child `GameObject`s

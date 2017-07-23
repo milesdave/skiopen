@@ -15,6 +15,9 @@ public:
 	// Called to render anything needed by the level.
 	virtual void render() { }
 
+	// Called to handle user input.
+	virtual void handleInput() { }
+
 	// Called when the game is paused.
 	virtual void pause(bool paused) { }
 

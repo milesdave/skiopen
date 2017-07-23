@@ -181,8 +181,11 @@ void Game::handleInput()
 		}
 	}
 
-	if(_player)
+	if(_player && _player->behaviour())
 		_player->behaviour()->handleInput();
+
+	if(_currentLevel)
+		_currentLevel->handleInput();
 }
 
 void Game::update()
