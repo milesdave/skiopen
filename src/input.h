@@ -10,21 +10,40 @@ class Input
 public:
 	~Input();
 
-	// The state of the InputType.
-	enum State
+	// Possible controller inputs.
+	enum In
 	{
-		Released = 0,
-		Half = 1,
-		Pressed = 2
+		// Digital inputs.
+		A = SDL_CONTROLLER_BUTTON_A,
+		B = SDL_CONTROLLER_BUTTON_B,
+		X = SDL_CONTROLLER_BUTTON_X,
+		Y = SDL_CONTROLLER_BUTTON_Y,
+		Select = SDL_CONTROLLER_BUTTON_BACK,
+		Home = SDL_CONTROLLER_BUTTON_GUIDE,
+		Start = SDL_CONTROLLER_BUTTON_START,
+		L3 = SDL_CONTROLLER_BUTTON_LEFTSTICK,
+		R3 = SDL_CONTROLLER_BUTTON_RIGHTSTICK,
+		L1 = SDL_CONTROLLER_BUTTON_LEFTSHOULDER,
+		R1 = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER,
+		Up = SDL_CONTROLLER_BUTTON_DPAD_UP,
+		Down = SDL_CONTROLLER_BUTTON_DPAD_DOWN,
+		Left = SDL_CONTROLLER_BUTTON_DPAD_LEFT,
+		Right = SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
+
+		// Analogue inputs.
+		LeftStickX = (Right + 1) + SDL_CONTROLLER_AXIS_LEFTX,
+		LeftStickY = (Right + 1) + SDL_CONTROLLER_AXIS_LEFTY,
+		RightStickX = (Right + 1) + SDL_CONTROLLER_AXIS_RIGHTX,
+		RightStickY = (Right + 1) + SDL_CONTROLLER_AXIS_RIGHTY,
+		L2 = (Right + 1) + SDL_CONTROLLER_AXIS_TRIGGERLEFT,
+		R2 = (Right + 1) + SDL_CONTROLLER_AXIS_TRIGGERRIGHT
 	};
 
-	// The types of input used in this game.
-	enum InputType
+	// Eveything about a single input event.
+	struct InputEvent
 	{
-		Up,
-		Down,
-		Left,
-		Right,
+		In input;
+		Sint16 state;
 	};
 
 	// Returns a pointer to this singleton instance.
@@ -36,40 +55,30 @@ public:
 	// Closes a controller if one is open.
 	void closeController();
 
-	// Returns true if a controller is connected.
-	inline bool controller() const { return _controller ? true : false; }
-
 	// Returns the state of the specified input right now.
-	State instant(InputType input) const;
+	Sint16 getInput(In input) const;
 
 	// Fills in the event with the next event in the Queue if one exists.
-	bool pollEvent(SDL_Event* e);
+	bool pollEvent(InputEvent* e);
 
-	// Adds an SDL_Event to the Queue. Should only be used by the Game
-	// class.
-	void offerEvent(SDL_Event e);
+	// Converst an SDL_Event and adds it to the Queue. Should only be used
+	// by the Game class.
+	void offerEvent(const SDL_Event& e);
+
+	// Clears the event queue. Should only be used by the Game class.
+	inline void clearEvents() { _events.clear(); }
 
 private:
 	Input();
-
-	// Returns the state of the specified input on the controller.
-	State controllerInstant(InputType input) const;
-
-	// Returns the state of the specified input on the keyboard.
-	State keyboardInstant(InputType input) const;
 
 	// The connected controller.
 	SDL_GameController* _controller = nullptr;
 
 	// The event queue.
-	Queue<SDL_Event> _events;
+	Queue<InputEvent> _events;
 
 	// This singleton instance.
 	static Input* _instance;
-
-	// Controller analogue stick deadzones.
-	static constexpr Sint16 DEADZONE = 22000;
-	static constexpr Sint16 DEADZONE_HALF = 15000;
 };
 
 #endif

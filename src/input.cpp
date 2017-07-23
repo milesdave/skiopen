@@ -34,7 +34,20 @@ void Input::closeController()
 	}
 }
 
-bool Input::pollEvent(SDL_Event* e)
+Sint16 Input::getInput(In input) const
+{
+	// The input is analogue.
+	if(input > Right)
+	{
+		return SDL_GameControllerGetAxis(_controller,
+			(SDL_GameControllerAxis)((input - Right) - 1));
+	}
+
+	return SDL_GameControllerGetButton(_controller,
+		(SDL_GameControllerButton)input);
+}
+
+bool Input::pollEvent(InputEvent* e)
 {
 	if(_events.size() > 0)
 	{
@@ -45,80 +58,39 @@ bool Input::pollEvent(SDL_Event* e)
 	return false;
 }
 
-void Input::offerEvent(SDL_Event e)
+void Input::offerEvent(const SDL_Event& e)
 {
-	_events.offer(e);
-}
+	// Note: only controller events are currently supported.
+	if(!_controller)
+		return;
 
-Input::State Input::instant(InputType input) const
-{
-	if(_controller)
-		return controllerInstant(input);
+	InputEvent input;
 
-	return keyboardInstant(input);
-}
-
-Input::State Input::controllerInstant(InputType input) const
-{
-	Sint16 x = SDL_GameControllerGetAxis(_controller, SDL_CONTROLLER_AXIS_LEFTX);
-	Sint16 y = SDL_GameControllerGetAxis(_controller, SDL_CONTROLLER_AXIS_LEFTY);
-
-	switch(input)
+	// A digital button was pressed.
+	if(e.type == SDL_CONTROLLERBUTTONDOWN || e.type == SDL_CONTROLLERBUTTONUP)
 	{
-	case Up:
-		if(y < -DEADZONE)
-			return Pressed;
-		else if(y < -DEADZONE_HALF)
-			return Half;
-		break;
-	case Down:
-		if(y > DEADZONE)
-			return Pressed;
-		else if(y > DEADZONE_HALF)
-			return Half;
-		break;
-	case Left:
-		if(x < -DEADZONE)
-			return Pressed;
-		else if(x < -DEADZONE_HALF)
-			return Half;
-		break;
-	case Right:
-		if(x > DEADZONE)
-			return Pressed;
-		else if(x > DEADZONE_HALF)
-			return Half;
-		break;
+		if(e.cbutton.button > Right)
+			return;
+
+		input.input = (In)e.cbutton.button;
+		input.state = e.type == SDL_CONTROLLERBUTTONDOWN ? 1 : 0;
+
+		_events.offer(input);
+		return;
 	}
 
-	return Released;
-}
-
-Input::State Input::keyboardInstant(InputType input) const
-{
-	const Uint8* keyboard = SDL_GetKeyboardState(nullptr);
-
-	switch(input)
+	// An analogue input was altered (stick or trigger).
+	if(e.type == SDL_CONTROLLERAXISMOTION)
 	{
-	case Up:
-		if(keyboard[SDL_SCANCODE_UP] || keyboard[SDL_SCANCODE_W])
-			return Pressed;
-		break;
-	case Down:
-		if(keyboard[SDL_SCANCODE_DOWN] || keyboard[SDL_SCANCODE_S])
-			return Pressed;
-		break;
-	case Left:
-		if(keyboard[SDL_SCANCODE_LEFT] || keyboard[SDL_SCANCODE_A])
-			return Pressed;
-		break;
-	case Right:
-		if(keyboard[SDL_SCANCODE_RIGHT] || keyboard[SDL_SCANCODE_D])
-			return Pressed;
-		break;
-	}
+		if(e.caxis.axis > (R2 - Right) - 1)
+			return;
 
-	return Released;
+		input.input = (In)((e.caxis.axis + Right) + 1);
+		input.state = e.caxis.value;
+
+		_events.offer(input);
+		return;
+	}
 }
 
 Input* Input::_instance = nullptr;

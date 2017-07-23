@@ -41,45 +41,56 @@ void PlayerBehaviour::handleInput()
 	if(_state == Collision || _state == Stopped)
 		return;
 
-	SDL_Event e;
+	Vector2f add = {0.0f, 0.0f};
+
+	// Button release events.
+	Input::InputEvent e;
 	while(_input->pollEvent(&e))
 	{
-		switch(e.type)
+		switch(e.input)
 		{
-		case SDL_KEYUP:
-			if(e.key.keysym.sym == SDLK_F3)
+		case Input::In::Start:
+			if(!e.state)
 				Game::instance()->pause();
-			if(e.key.keysym.sym == SDLK_F2)
+			break;
+		case Input::In::Select:
+			if(!e.state)
 				Game::instance()->restart();
 			break;
 		}
 	}
 
-	Vector2f add = {0.0f, 0.0f};
-	Input::State input;
-	
-	input = _input->instant(Input::InputType::Up);
-	if(input == Input::State::Pressed)
+	// TODO Maybe pausing shouldn't be done here.
+	if(Game::instance()->isPaused())
+		return;
+
+	// Input state as of right now.
+	Sint16 state = _input->getInput(Input::In::LeftStickY);
+
+	// Up.
+	if(state < -DEADZONE)
 		add.y -= VELOCITY_MOD.y;
-	else if(input == Input::State::Half)
+	else if(state < -DEADZONE_HALF)
 		add.y -= VELOCITY_MOD_HALF.y;
 
-	input = _input->instant(Input::InputType::Down);
-	if(input == Input::State::Pressed)
+	// Down.
+	if(state > DEADZONE)
 		add.y += VELOCITY_MOD.y;
-	else if(input == Input::State::Half)
+	else if(state > DEADZONE_HALF)
 		add.y += VELOCITY_MOD_HALF.y;
 
-	input = _input->instant(Input::InputType::Left);
-	if(input == Input::State::Pressed)
+	state = _input->getInput(Input::In::LeftStickX);
+
+	// Left.
+	if(state < -DEADZONE)
 		add.x -= VELOCITY_MOD.x;
-	else if(input == Input::State::Half)
+	else if(state < -DEADZONE_HALF)
 		add.x -= VELOCITY_MOD_HALF.x;
 
-	input = _input->instant(Input::InputType::Right);
-	if(input == Input::State::Pressed)
+	// Right.
+	if(state > DEADZONE)
 		add.x += VELOCITY_MOD.x;
-	else if(input == Input::State::Half)
+	else if(state > DEADZONE_HALF)
 		add.x += VELOCITY_MOD_HALF.x;
 
 	_gameObject->physics()->addVelocity(add);

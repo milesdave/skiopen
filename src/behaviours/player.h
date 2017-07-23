@@ -56,6 +56,10 @@ private:
 	// Vector to modify the velocity with.
 	static constexpr Vector2f VELOCITY_MOD = { 4.0f, 2.5f };
 	static constexpr Vector2f VELOCITY_MOD_HALF = { 1.0f, 0.75f };
+
+	// Controller analogue stick deadzones.
+	static constexpr Sint16 DEADZONE = 22000;
+	static constexpr Sint16 DEADZONE_HALF = 15000;
 };
 
 #endif

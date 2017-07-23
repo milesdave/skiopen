@@ -151,6 +151,8 @@ void Game::setLevel(int index)
 
 void Game::handleInput()
 {
+	Input::instance()->clearEvents();
+
 	SDL_Event e;
 	while(SDL_PollEvent(&e))
 	{
@@ -283,6 +285,9 @@ void Game::pause()
 void Game::restart()
 {
 	if(!_currentLevel)
+		return;
+
+	if(_paused)
 		return;
 
 	_currentLevel->onExit();
