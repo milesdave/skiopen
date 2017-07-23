@@ -2,6 +2,7 @@
 #define BEHAVIOURS_PLAYER_H_
 
 #include "../data.h"
+#include "../input.h"
 #include "../timer.h"
 #include "../types.h"
 #include "behaviour.h"
@@ -16,13 +17,13 @@ public:
 	// Updates the player GameObject.
 	void update() override;
 
+	// Handle user interaction.
+	void handleInput() override;
+
 	// Handles a collision event.
 	void collide() override;
 
 private:
-	// Handle user interaction.
-	void handleInput();
-
 	// Handles the collions state.
 	void handleCollision();
 
@@ -46,11 +47,19 @@ private:
 	// Current sprite state.
 	State _state = Down;
 
-	// Vector to modify the velocity with.
-	static constexpr Vector2f VELOCITY_MOD = { 4.0f, 2.5f };
-
 	// After collision wait timer.
 	Timer _collisionTimer;
+
+	// The Input class instance.
+	Input* _input = nullptr;
+
+	// Vector to modify the velocity with.
+	static constexpr Vector2f VELOCITY_MOD = { 4.0f, 2.5f };
+	static constexpr Vector2f VELOCITY_MOD_HALF = { 1.0f, 0.75f };
+
+	// Controller analogue stick deadzones.
+	static constexpr Sint16 DEADZONE = 22000;
+	static constexpr Sint16 DEADZONE_HALF = 15000;
 };
 
 #endif

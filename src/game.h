@@ -44,6 +44,12 @@ public:
 	// Sets the renderer draw colour.
 	void setDrawColour(Colour colour);
 
+	// Pauses or unpauses the game.
+	void pause();
+
+	// Restarts the current level.
+	void restart();
+
 	// Returns a pointer to the SDL renderer.
 	inline SDL_Renderer* renderer() const { return _renderer; }
 
@@ -84,12 +90,6 @@ private:
 
 	// Checks if any GameObject has collided with another.
 	void checkCollisions();
-
-	// Pauses or unpauses the game.
-	void pause();
-
-	// Restarts the current level.
-	void restart();
 
 	// Sets the window icon to the .exe icon.
 	void setWindowIcon();

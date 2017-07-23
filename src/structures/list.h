@@ -30,7 +30,7 @@ public:
 
 	private:
 		// The data stored in this node.
-		T _data = nullptr;
+		T _data;
 
 		// Pointer to the next node.
 		Node* _next = nullptr;

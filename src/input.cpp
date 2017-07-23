@@ -1,14 +1,23 @@
-#include <SDL.h>
 #include "game.h"
 #include "input.h"
 
 Input::Input() { }
 
-Input::~Input() { }
+Input::~Input()
+{
+	closeController();
+}
+
+Input* Input::instance()
+{
+	if(!_instance)
+		_instance = new Input();
+	return _instance;
+}
 
 void Input::initController()
 {
-	if(SDL_NumJoysticks() < 1 || !SDL_IsGameController(0))
+	if(!SDL_IsGameController(0))
 		return;
 
 	_controller = SDL_GameControllerOpen(0);
@@ -19,101 +28,69 @@ void Input::initController()
 void Input::closeController()
 {
 	if(_controller)
+	{
 		SDL_GameControllerClose(_controller);
+		_controller = nullptr;
+	}
 }
 
-bool Input::input(Key key)
+Sint16 Input::getInput(In input) const
 {
-	if(_controller)
-		return buttonDown(key);
-	else
-		return keyDown(key);
-}
-
-bool Input::buttonDown(Key key)
-{
-	bool result = SDL_GameControllerGetButton(_controller,
-		(SDL_GameControllerButton)key) ? true : false;
-
-	// Directional key specified - try joystick as well.
-	if((int)key >= (int)SDL_CONTROLLER_BUTTON_DPAD_UP && (int)key <= (int)SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
-		result |= joystick(JLeft, (Direction)key);
-
-	return result;
-}
-
-bool Input::keyDown(Key key)
-{
-	const Uint8* keyboard = SDL_GetKeyboardState(nullptr);
-
-	switch(key)
+	// The input is analogue.
+	if(input > Right)
 	{
-	case Up:
-		if(keyboard[SDL_SCANCODE_UP] || keyboard[SDL_SCANCODE_W])
-			return true;
-		break;
-	case Down:
-		if(keyboard[SDL_SCANCODE_DOWN] || keyboard[SDL_SCANCODE_S])
-			return true;
-		break;
-	case Left:
-		if(keyboard[SDL_SCANCODE_LEFT] || keyboard[SDL_SCANCODE_A])
-			return true;
-		break;
-	case Right:
-		if(keyboard[SDL_SCANCODE_RIGHT] || keyboard[SDL_SCANCODE_D])
-			return true;
-		break;
-	case Pause:
-		if(keyboard[SDL_SCANCODE_F3])
-			return true;
-		break;
-	case Reset:
-		if(keyboard[SDL_SCANCODE_F2])
-			return true;
-		break;
+		return SDL_GameControllerGetAxis(_controller,
+			(SDL_GameControllerAxis)((input - Right) - 1));
+	}
+
+	return SDL_GameControllerGetButton(_controller,
+		(SDL_GameControllerButton)input);
+}
+
+bool Input::pollEvent(InputEvent* e)
+{
+	if(_events.size() > 0)
+	{
+		*e = _events.poll();
+		return true;
 	}
 
 	return false;
 }
 
-bool Input::joystick(Joystick stick, Direction direction)
+void Input::offerEvent(const SDL_Event& e)
 {
-	Sint16 x, y;
+	// Note: only controller events are currently supported.
+	if(!_controller)
+		return;
 
-	switch(stick)
+	InputEvent input;
+
+	// A digital button was pressed.
+	if(e.type == SDL_CONTROLLERBUTTONDOWN || e.type == SDL_CONTROLLERBUTTONUP)
 	{
-	case JLeft:
-		x = SDL_GameControllerGetAxis(_controller, SDL_CONTROLLER_AXIS_LEFTX);
-		y = SDL_GameControllerGetAxis(_controller, SDL_CONTROLLER_AXIS_LEFTY);
-		break;
-	case JRight:
-		x = SDL_GameControllerGetAxis(_controller, SDL_CONTROLLER_AXIS_RIGHTX);
-		y = SDL_GameControllerGetAxis(_controller, SDL_CONTROLLER_AXIS_RIGHTY);
-		break;
+		if(e.cbutton.button > Right)
+			return;
+
+		input.input = (In)e.cbutton.button;
+		input.state = e.type == SDL_CONTROLLERBUTTONDOWN ? 1 : 0;
+
+		_events.offer(input);
+		return;
 	}
 
-	switch(direction)
+	// An analogue input was altered (stick or trigger).
+	if(e.type == SDL_CONTROLLERAXISMOTION)
 	{
-	case DUp:
-		if(y < -DEADZONE)
-			return true;
-		break;
-	case DDown:
-		if(y > DEADZONE)
-			return true;
-		break;
-	case DLeft:
-		if(x < -DEADZONE)
-			return true;
-		break;
-	case DRight:
-		if(x > DEADZONE)
-			return true;
-		break;
-	}
+		if(e.caxis.axis > (R2 - Right) - 1)
+			return;
 
-	return false;
+		input.input = (In)((e.caxis.axis + Right) + 1);
+		input.state = e.caxis.value;
+
+		_events.offer(input);
+		return;
+	}
 }
 
-SDL_GameController* Input::_controller = nullptr;
+Input* Input::_instance = nullptr;

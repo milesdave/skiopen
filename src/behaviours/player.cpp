@@ -1,21 +1,19 @@
-#include "../input.h"
+#include "../game.h"
 #include "player.h"
 
-PlayerBehaviour::PlayerBehaviour() { }
+PlayerBehaviour::PlayerBehaviour()
+{
+	_input = Input::instance();
+}
 
 PlayerBehaviour::~PlayerBehaviour() { }
 
 void PlayerBehaviour::update()
 {
 	if(_state == Collision || _state == Stopped)
-	{
 		handleCollision();
-	}
 	else
-	{
-		handleInput();
 		updateSprite();
-	}
 }
 
 void PlayerBehaviour::collide()
@@ -40,16 +38,60 @@ void PlayerBehaviour::collide()
 
 void PlayerBehaviour::handleInput()
 {
-	Vector2f add = { 0.0f, 0.0f };
+	if(_state == Collision || _state == Stopped)
+		return;
 
-	if(Input::input(Key::Up))
+	Vector2f add = {0.0f, 0.0f};
+
+	// Button release events.
+	Input::InputEvent e;
+	while(_input->pollEvent(&e))
+	{
+		switch(e.input)
+		{
+		case Input::In::Start:
+			if(!e.state)
+				Game::instance()->pause();
+			break;
+		case Input::In::Select:
+			if(!e.state)
+				Game::instance()->restart();
+			break;
+		}
+	}
+
+	// TODO Maybe pausing shouldn't be done here.
+	if(Game::instance()->isPaused())
+		return;
+
+	// Input state as of right now.
+	Sint16 state = _input->getInput(Input::In::LeftStickY);
+
+	// Up.
+	if(state < -DEADZONE)
 		add.y -= VELOCITY_MOD.y;
-	if(Input::input(Key::Down))
+	else if(state < -DEADZONE_HALF)
+		add.y -= VELOCITY_MOD_HALF.y;
+
+	// Down.
+	if(state > DEADZONE)
 		add.y += VELOCITY_MOD.y;
-	if(Input::input(Key::Left))
+	else if(state > DEADZONE_HALF)
+		add.y += VELOCITY_MOD_HALF.y;
+
+	state = _input->getInput(Input::In::LeftStickX);
+
+	// Left.
+	if(state < -DEADZONE)
 		add.x -= VELOCITY_MOD.x;
-	if(Input::input(Key::Right))
+	else if(state < -DEADZONE_HALF)
+		add.x -= VELOCITY_MOD_HALF.x;
+
+	// Right.
+	if(state > DEADZONE)
 		add.x += VELOCITY_MOD.x;
+	else if(state > DEADZONE_HALF)
+		add.x += VELOCITY_MOD_HALF.x;
 
 	_gameObject->physics()->addVelocity(add);
 }

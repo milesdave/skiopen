@@ -22,7 +22,7 @@ Game::~Game()
 	if(_currentLevel)
 		_currentLevel->onExit();
 
-	Input::closeController();
+	delete Input::instance();
 	delete Data::instance();
 
 	const List<Level*>::Node* node = _levels.head();
@@ -56,25 +56,22 @@ void Game::init()
 		SDL_WINDOWPOS_CENTERED, _winWidth, _winHeight, SDL_WINDOW_HIDDEN);
 	if(!_window)
 		panic("SDL_CreateWindow()", SDL_GetError());
-
 	setWindowIcon();
 
 	_renderer = SDL_CreateRenderer(_window, -1,
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if(!_renderer)
 		panic("SDL_CreateRenderer()", SDL_GetError());
-
 	SDL_SetRenderDrawColor(_renderer, 0x00, 0x00, 0x00, 0xFF);
-	SDL_ShowWindow(_window);
 
 	srand((unsigned)time(nullptr));
 
 	Data::instance()->load();
-	Input::initController();
 	_gameObjects.init(128);
 	_camera.setGeometry(Rect{0, 0, _winWidth, _winHeight});
-
 	_quadtree = new Quadtree(0, Rect{0, 0, _winWidth, _winHeight});
+
+	SDL_ShowWindow(_window);
 }
 
 void Game::loop()
@@ -154,6 +151,8 @@ void Game::setLevel(int index)
 
 void Game::handleInput()
 {
+	Input::instance()->clearEvents();
+
 	SDL_Event e;
 	while(SDL_PollEvent(&e))
 	{
@@ -162,20 +161,28 @@ void Game::handleInput()
 		case SDL_QUIT:
 			_quit = true;
 			break;
+		case SDL_CONTROLLERDEVICEADDED:
+			Input::instance()->initController();
+			break;
+		case SDL_CONTROLLERDEVICEREMOVED:
+			Input::instance()->closeController();
+			break;
 		case SDL_KEYDOWN:
-			// TODO Handle these with Input class.
-			switch(e.key.keysym.sym)
-			{
-			case SDLK_F2:
-				restart();
-				break;
-			case SDLK_F3:
-				pause();
-				break;
-			}
+		case SDL_KEYUP:
+		case SDL_MOUSEMOTION:
+		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONUP:
+		case SDL_MOUSEWHEEL:
+		case SDL_CONTROLLERBUTTONDOWN:
+		case SDL_CONTROLLERBUTTONUP:
+		case SDL_CONTROLLERAXISMOTION:
+			Input::instance()->offerEvent(e);
 			break;
 		}
 	}
+
+	if(_player)
+		_player->behaviour()->handleInput();
 }
 
 void Game::update()
@@ -257,9 +264,15 @@ void Game::checkCollisions()
 		Hitbox otherHitbox = possibleCollisions[i]->physics()->hitbox();
 
 		// Check for Hitbox overlap.
-		if(playerHitbox.x < (otherHitbox.x + otherHitbox.w) && (playerHitbox.x + playerHitbox.w) > otherHitbox.x)
-			if(playerHitbox.y < (otherHitbox.y + otherHitbox.h) && (playerHitbox.y + playerHitbox.h) > otherHitbox.y)
+		if(playerHitbox.x < (otherHitbox.x + otherHitbox.w)
+			&& (playerHitbox.x + playerHitbox.w) > otherHitbox.x)
+		{
+			if(playerHitbox.y < (otherHitbox.y + otherHitbox.h)
+				&& (playerHitbox.y + playerHitbox.h) > otherHitbox.y)
+			{
 				_player->behaviour()->collide();
+			}
+		}
 	}
 }
 
@@ -272,6 +285,9 @@ void Game::pause()
 void Game::restart()
 {
 	if(!_currentLevel)
+		return;
+
+	if(_paused)
 		return;
 
 	_currentLevel->onExit();
